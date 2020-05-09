@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "960707659051",
+    "firebase_url": "https://noamsway-e82ae.firebaseio.com",
+    "project_id": "noamsway-e82ae",
+    "storage_bucket": "noamsway-e82ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960707659051:android:71e740170c6ff616b5716e",
+        "android_client_info": {
+          "package_name": "com.example.noamsway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960707659051-di3ubh2r1upjjrqthqdra6v74gmb0bcq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.noamsway",
+            "certificate_hash": "244f13540e3d1a8c272779a1ab6fac88eea9892b"
+          }
+        },
+        {
+          "client_id": "960707659051-iesr14gjrn384ao4v755oc3gm02le34o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcD3TRZZCxL-1l9OwQzdnh0HJ1ROqtYIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960707659051-iesr14gjrn384ao4v755oc3gm02le34o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
