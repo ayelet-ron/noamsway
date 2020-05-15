@@ -12,25 +12,27 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.noamsway.R;
 
+
 public class postListFragment extends Fragment {
 
-    private PostListViewModel mViewModel;
+    private PostListViewModel postListViewModel;
 
-    public static postListFragment newInstance() {
-        return new postListFragment();
-    }
+    //public static postListFragment newInstance() {
+        //return new postListFragment();
+    //}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        postListViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
         return inflater.inflate(R.layout.post_list_fragment, container, false);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //mViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
-        // TODO: Use the ViewModel
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        //mViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
+//        // TODO: Use the ViewModel
+//    }
 
 }
