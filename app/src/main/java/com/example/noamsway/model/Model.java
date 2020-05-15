@@ -14,7 +14,7 @@ public class Model {
         data.add(new Category("Patriotism", R.drawable.picture1,Categories.PATRIOTISM));
 
         data.add(new Category("Trips", R.drawable.trip4,Categories.TRIPS));
-        data.add(new Category("Army", R.drawable.army4,Categories.ARMY));
+        data.add(new Category("Army", R.drawable.capture,Categories.ARMY));
         //data.add(new Category("Patriotism", R.drawable.patriotism_fin,Categories.PATRIOTISM));
         data.add(new Category("Patriotism", R.drawable.flag_final,Categories.PATRIOTISM));
         //data.add(new Category("Trips", R.drawable.trips3,Categories.TRIPS));
