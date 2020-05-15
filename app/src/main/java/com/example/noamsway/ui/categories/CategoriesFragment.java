@@ -47,14 +47,14 @@ public class CategoriesFragment extends Fragment {
         CategoryListAdapter adapter = new CategoryListAdapter();
         list.setAdapter(adapter);
 
-//        adapter.setOnIntemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onClick(int position) {
-//                Log.d("TAG","row was clicked" + position);
-//                Category category = data.get(position);
-//                parent.onItemSelected(category);
-//            }
-//        });
+        adapter.setOnIntemClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Log.d("TAG","row was clicked" + position);
+                Category category = data.get(position);
+                //NavGraphDirections direction = StudentsListFragmentDirections.actionGlobalStudentDetailsFragment(student);
+            }
+        });
         return root;
     }
     static class CategoryRowViewHolder extends RecyclerView.ViewHolder{
@@ -64,7 +64,6 @@ public class CategoriesFragment extends Fragment {
 
         public CategoryRowViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            this.categoryName = itemView.findViewById(R.id.category_name);
             this.categoryImage = itemView.findViewById(R.id.category_image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +81,7 @@ public class CategoriesFragment extends Fragment {
         }
 
         public void bind(Category category) {
-            this.categoryName.setText(category.name);
+
             this.categoryImage.setImageResource(category.img);
             this.category = category;
         }
