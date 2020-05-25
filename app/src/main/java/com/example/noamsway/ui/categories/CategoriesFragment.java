@@ -8,115 +8,96 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noamsway.R;
 import com.example.noamsway.model.Category;
 import com.example.noamsway.model.Model;
+import com.example.noamsway.ui.auth.SignUpFragment;
+import com.example.noamsway.utils.RecyclerViewClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesFragment extends Fragment {
-    RecyclerView list;
-    List<Category> data;
+public class CategoriesFragment extends Fragment implements RecyclerViewClickListener {
+    ArrayList<Category> data;
+    private RecyclerView recyclerView;
+    private CategorieAdapter adapter;
     private CategoriesViewModel categoriesViewModel;
 
-//    interface Delegate{
-//        void onItemSelected(Category category);
-//    }
-//    Delegate parent;
     public CategoriesFragment() {
-    data = Model.instance.getAllCategories();
+        data = Model.instance.getAllCategories();
     }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         categoriesViewModel =
                 ViewModelProviders.of(this).get(CategoriesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_categories, container, false);
-        list = root.findViewById(R.id.categories_list);
-        list.setHasFixedSize(true);
+        recyclerView = root.findViewById(R.id.categories_list);
+        recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        list.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
 
-        CategoryListAdapter adapter = new CategoryListAdapter();
-        list.setAdapter(adapter);
-
-        adapter.setOnIntemClickListener(new OnItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                Log.d("TAG","row was clicked" + position);
-                Category category = data.get(position);
-                //NavGraphDirections direction = StudentsListFragmentDirections.actionGlobalStudentDetailsFragment(student);
-            }
-        });
+        this.adapter = new CategorieAdapter(data,this);
+        recyclerView.setAdapter(this.adapter);
+//        adapter..(new OnItemClickListener() {
+//            @Override
+//            public void onClick(int position) {
+//                Fragment fragment = new SignUpFragment();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//                fragmentTransaction.replace(R.id.loginFragment, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+//                Log.d("TAG","row was clicked" + position);
+//                Category category = data.get(position);
+//                //NavController navCtrl = Navigation.findNavController(list);
+//                //navCtrl.navigate(R.id.action_nav_category_to_postListFragment);
+//                NavDirections direction = CategoriesFragmentDirections.actionNavCategoryToPostListFragment();
+//                Navigation.findNavController(list).navigate(direction);
+//                //NavGraphDirections direction = StudentsListFragmentDirections.actionGlobalStudentDetailsFragment(student);
+//            }
+//        });
         return root;
     }
-    static class CategoryRowViewHolder extends RecyclerView.ViewHolder{
-        TextView categoryName;
-        ImageView categoryImage;
-        Category category;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        public CategoryRowViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
-            super(itemView);
-            this.categoryImage = itemView.findViewById(R.id.category_image);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
-                            listener.onClick(position);
-                        }
-                    }
-                }
-            });
-
-        }
-
-        public void bind(Category category) {
-
-            this.categoryImage.setImageResource(category.img);
-            this.category = category;
-        }
     }
-
-    interface OnItemClickListener{
-        void onClick(int position);
-    }
-
-    class CategoryListAdapter extends RecyclerView.Adapter<CategoryRowViewHolder>{
-        private OnItemClickListener listener;
-
-        void setOnIntemClickListener(OnItemClickListener listener){
-            this.listener = listener;
-        }
-
-
-        @NonNull
-        @Override
-        public CategoryRowViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View v = LayoutInflater.from(getActivity()).inflate(R.layout.category_list_row, viewGroup,false );
-            CategoryRowViewHolder vh = new CategoryRowViewHolder(v, listener);
-            return vh;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull CategoryRowViewHolder categoryRowViewHolder, int i) {
-            Category category = data.get(i);
-            categoryRowViewHolder.bind(category);
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return data.size();
-        }
+    @Override
+    public void onItemClick(int position) {
+        //Toast.makeText(getActivity() , data.get(position).name, Toast.LENGTH_SHORT).show();
+//        Fragment fragment = new SignUpFragment();
+//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//        fragmentTransaction.replace(R.id.loginFragment, fragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+        Log.d("TAG","row was clicked" + position);
+        NavController nav = NavHostFragment.findNavController(this);
+        nav.navigate(R.id.action_nav_category_to_postListFragment);
+//        NavDirections direction = CategoriesFragmentDirections.actionNavCategoryToPostListFragment();
+//        Navigation.findNavController(recyclerView).navigate(direction);
     }
 }

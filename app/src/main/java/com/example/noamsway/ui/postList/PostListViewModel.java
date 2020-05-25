@@ -1,7 +1,19 @@
 package com.example.noamsway.ui.postList;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 public class PostListViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+
+    private MutableLiveData<String> mText;
+
+    public PostListViewModel() {
+        mText = new MutableLiveData<>();
+        mText.setValue("This is home fragment");
+    }
+
+    public LiveData<String> getText() {
+        return mText;
+    }
 }
