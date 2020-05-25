@@ -49,11 +49,11 @@
     <fragment
         android:id="@+id/postListFragment"
         android:name="com.example.noamsway.ui.postList.postListFragment"
-        android:label="post_list_fragment"
+        android:label="Posts List"
         tools:layout="@layout/post_list_fragment" />
     <fragment
         android:id="@+id/nav_contact_us"
         android:name="com.example.noamsway.ui.ContactUsFragment"
-        android:label="contact_us_fragment"
+        android:label="Contact Us"
         tools:layout="@layout/contact_us_fragment" />
 </navigation>

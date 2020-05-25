@@ -47,16 +47,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
         private int mCurrentPosition;
         CardView cardView;
         TextView postTitle;
+        TextView postAuthor;
         TextView postDescription;
-        //ImageView postImage;
+        ImageView postImage;
         Post post;
 
         public PostRowViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.postTitle = itemView.findViewById(R.id.txt_post_title);
-            this.postDescription = itemView.findViewById(R.id.txt_post_description);
+            this.postTitle = itemView.findViewById(R.id.txt_post_description);
+            this.postAuthor = itemView.findViewById(R.id.txt_post_title);
             this.cardView = itemView.findViewById(R.id.cardview_item);
-
+            this.postImage = itemView.findViewById(R.id.img_post);
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -67,10 +68,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
         }
 
         public void bind(Post post) {
-            this.cardView.setBackgroundResource(post.image);
-            //this.postImage.setBackgroundResource(post.image);
+            //this.cardView.setBackgroundResource(post.image);
+            this.postImage.setBackgroundResource(post.image);
             this.postTitle.setText(post.title);
-            this.postDescription.setText(post.description);
+            this.postAuthor.setText(post.authorName);
             this.post = post;
         }
     }
