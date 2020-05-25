@@ -4,29 +4,28 @@ import android.os.AsyncTask;
 
 import com.example.noamsway.R;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Model {
     public static final Model instance = new Model();
-    List<Category> data = new LinkedList<>();
+    ArrayList<Category> categoriesList = new ArrayList<>();
+    ArrayList<Post> postsList = new ArrayList<>();
     private Model(){
-        data.add(new Category("Patriotism", R.drawable.picture1,Categories.PATRIOTISM));
-
-        data.add(new Category("Trips", R.drawable.trip4,Categories.TRIPS));
-        data.add(new Category("Army", R.drawable.capture,Categories.ARMY));
-        //data.add(new Category("Patriotism", R.drawable.patriotism_fin,Categories.PATRIOTISM));
-        data.add(new Category("Patriotism", R.drawable.flag_final,Categories.PATRIOTISM));
-        //data.add(new Category("Trips", R.drawable.trips3,Categories.TRIPS));
-        //data.add(new Category("Trips", R.drawable.trips,Categories.TRIPS));
-        //data.add(new Category("Army", R.drawable.army_fin,Categories.ARMY));
-
-        //data.add(new Category("Army", R.drawable.army,Categories.ARMY));
-
-        //data.add(new Category("Flowers", R.drawable.flowers,Categories.FAMILY));
+        categoriesList.add(new Category("Patriotism", R.drawable.picture1,Categories.PATRIOTISM));
+        categoriesList.add(new Category("Trips", R.drawable.trips,Categories.TRIPS));
+        categoriesList.add(new Category("Army", R.drawable.capture,Categories.ARMY));
+        categoriesList.add(new Category("News", R.drawable.news,Categories.NOAMRON));
+        postsList.add(new Post(R.drawable.flowers,"red flowers","my red flowers story with my father","Ayelet Ron"));
+        postsList.add(new Post(R.drawable.back,"just look at the sun","my red flowers story with my father","Chen Amiell"));
+        postsList.add(new Post(R.drawable.trip,"just look at the view","my red flowers story with my father","Noam Ron"));
     }
-    public List<Category> getAllCategories(){
-        return data;
+    public ArrayList<Category> getAllCategories(){
+        return categoriesList;
+    }
+    public ArrayList<Post> getAllPosts(){
+        return postsList;
     }
 
     public interface getAllExampleListener {
