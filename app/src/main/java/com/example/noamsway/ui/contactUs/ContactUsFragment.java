@@ -1,4 +1,4 @@
-package com.example.noamsway.ui;
+package com.example.noamsway.ui.contactUs;
 
 import androidx.lifecycle.ViewModelProviders;
 

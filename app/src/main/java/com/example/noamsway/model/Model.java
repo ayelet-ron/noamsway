@@ -10,10 +10,16 @@ import java.util.List;
 
 public class Model {
     public static final Model instance = new Model();
+    ModelFirebase modelFirebase;
+    ModelFirebaseAuth modelFirebaseAuth;
+
     ArrayList<Category> categoriesList = new ArrayList<>();
     ArrayList<Post> postsList = new ArrayList<>();
     ArrayList<Post> categoryPostsList = new ArrayList<>();
     private Model(){
+        this.modelFirebase = new ModelFirebase();
+        this.modelFirebaseAuth = new ModelFirebaseAuth();
+
         Category patriotism = new Category("Patriotism", R.drawable.picture1,Categories.PATRIOTISM);
         Category trips = new Category("Trips", R.drawable.trips,Categories.TRIPS);
         Category army = new Category("Army", R.drawable.capture,Categories.ARMY);
@@ -30,12 +36,18 @@ public class Model {
         categoryPostsList.add(trip);
 
     }
+    public boolean areUserLoggedIn(){
+        return this.modelFirebaseAuth.areUserLoggedIn();
+    }
     public ArrayList<Category> getAllCategories(){
         return categoriesList;
     }
     public ArrayList<Post> getAllPosts(){
         return postsList;
     }
+//    public ArrayList<String> getAllCategoriesNames(){
+//        return categoriesList.forEach(s->s.name);
+//    }
     public ArrayList<Post> getAllPostOfCategory(String categoryName){
         if (categoryName.equals("Patriotism")){
             return categoryPostsList;

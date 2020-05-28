@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_contact_us"
-        android:name="com.example.noamsway.ui.ContactUsFragment"
+        android:name="com.example.noamsway.ui.contactUs.ContactUsFragment"
         android:label="Contact Us"
         tools:layout="@layout/contact_us_fragment" />
     <fragment

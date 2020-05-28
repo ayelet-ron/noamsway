@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
-    tools:context=".ui.ContactUsFragment">
+    tools:context=".ui.contactUs.ContactUsFragment">
 
     <ImageView
         android:id="@+id/imageView"
