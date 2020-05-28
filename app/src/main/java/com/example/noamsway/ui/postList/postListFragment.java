@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.noamsway.R;
 import com.example.noamsway.model.Model;
 import com.example.noamsway.model.Post;
+import com.example.noamsway.ui.categories.CategoriesFragmentArgs;
 import com.example.noamsway.utils.RecyclerViewClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,15 +29,15 @@ import java.util.ArrayList;
 public class postListFragment extends Fragment implements RecyclerViewClickListener {
     NavController nav;
     FloatingActionButton fab;
-    ArrayList<Post> postsList;
+    ArrayList<Post> postsList = new ArrayList<>();;
     private RecyclerView recyclerView;
     private PostAdapter adapter;
     private PostListViewModel postListViewModel;
+    private String categoryName;
     View root;
 
 
     public postListFragment() {
-        postsList = Model.instance.getAllPosts();
     }
 
     @Override
@@ -48,14 +49,16 @@ public class postListFragment extends Fragment implements RecyclerViewClickListe
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        categoryName = CategoriesFragmentArgs.fromBundle(getArguments()).getCategoryName();
+        postsList = Model.instance.getAllPostOfCategory(categoryName);
         this.adapter = new PostAdapter(postsList, this);
         recyclerView.setAdapter(this.adapter);
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                NavController nav = NavHostFragment.findNavController(postListFragment.this);
+                nav.navigate(R.id.action_postListFragment_to_newPostFragment);
             }
         });
         return this.root;

@@ -56,12 +56,6 @@ public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.Cate
         public CategoryRowViewHolder(@NonNull View itemView) {
             super(itemView);
             this.categoryImage = itemView.findViewById(R.id.category_image);
-//            categoryImage.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    recyclerViewClickListener.onItemClick(getAdapterPosition());
-//                }
-//            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
