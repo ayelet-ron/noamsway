@@ -12,14 +12,23 @@ public class Model {
     public static final Model instance = new Model();
     ArrayList<Category> categoriesList = new ArrayList<>();
     ArrayList<Post> postsList = new ArrayList<>();
+    ArrayList<Post> categoryPostsList = new ArrayList<>();
     private Model(){
-        categoriesList.add(new Category("Patriotism", R.drawable.picture1,Categories.PATRIOTISM));
-        categoriesList.add(new Category("Trips", R.drawable.trips,Categories.TRIPS));
-        categoriesList.add(new Category("Army", R.drawable.capture,Categories.ARMY));
+        Category patriotism = new Category("Patriotism", R.drawable.picture1,Categories.PATRIOTISM);
+        Category trips = new Category("Trips", R.drawable.trips,Categories.TRIPS);
+        Category army = new Category("Army", R.drawable.capture,Categories.ARMY);
+        categoriesList.add(patriotism);
+        categoriesList.add(trips);
+        categoriesList.add(army);
         categoriesList.add(new Category("News", R.drawable.news,Categories.NOAMRON));
-        postsList.add(new Post(R.drawable.flowers,"red flowers","my red flowers story with my father","Ayelet Ron"));
-        postsList.add(new Post(R.drawable.back,"just look at the sun","my red flowers story with my father","Chen Amiell"));
-        postsList.add(new Post(R.drawable.trip,"just look at the view","my red flowers story with my father","Noam Ron"));
+        Post pat = new Post(R.drawable.flowers,"red flowers","my red flowers story with my father","Ayelet Ron",patriotism);
+        Post trip = new Post(R.drawable.back,"just look at the sun","my red flowers story with my father","Chen Amiell",trips);
+        postsList.add(pat);
+        postsList.add(trip);
+        postsList.add(new Post(R.drawable.trip,"just look at the view","my red flowers story with my father","Noam Ron",army));
+        categoryPostsList.add(pat);
+        categoryPostsList.add(trip);
+
     }
     public ArrayList<Category> getAllCategories(){
         return categoriesList;
@@ -27,7 +36,12 @@ public class Model {
     public ArrayList<Post> getAllPosts(){
         return postsList;
     }
-
+    public ArrayList<Post> getAllPostOfCategory(String categoryName){
+        if (categoryName.equals("Patriotism")){
+            return categoryPostsList;
+        }
+        return postsList;
+    }
     public interface getAllExampleListener {
         void onComplete(List<String> data);
     }

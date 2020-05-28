@@ -37,10 +37,9 @@
         <action
             android:id="@+id/action_nav_category_to_postListFragment"
             app:destination="@id/postListFragment"
-            app:popUpTo="@id/nav_category"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/nav_category" />
         <argument
-            android:name="categoryName"
+            android:name="category_name"
             app:argType="string" />
     </fragment>
 
@@ -58,6 +57,9 @@
             android:id="@+id/action_postListFragment_to_newPostFragment"
             app:destination="@id/newPostFragment"
             app:popUpTo="@id/postListFragment" />
+        <argument
+            android:name="category_name"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/nav_contact_us"
