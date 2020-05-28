@@ -95,6 +95,7 @@ public class CategoriesFragment extends Fragment implements RecyclerViewClickLis
 //        fragmentTransaction.addToBackStack(null);
 //        fragmentTransaction.commit();
         Log.d("TAG","row was clicked" + position);
+        //CategoriesFragmentDirections.NavDirections action = CategoriesFragmentDirections.actionNavCategoryToPostListFragment();
         NavController nav = NavHostFragment.findNavController(this);
         nav.navigate(R.id.action_nav_category_to_postListFragment);
 //        NavDirections direction = CategoriesFragmentDirections.actionNavCategoryToPostListFragment();

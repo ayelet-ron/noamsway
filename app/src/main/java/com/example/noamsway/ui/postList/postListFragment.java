@@ -54,8 +54,8 @@ public class postListFragment extends Fragment implements RecyclerViewClickListe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                NavController nav = NavHostFragment.findNavController(postListFragment.this);
+                nav.navigate(R.id.action_postListFragment_to_newPostFragment);
             }
         });
         return this.root;

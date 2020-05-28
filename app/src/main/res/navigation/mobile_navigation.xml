@@ -38,7 +38,10 @@
             android:id="@+id/action_nav_category_to_postListFragment"
             app:destination="@id/postListFragment"
             app:popUpTo="@id/nav_category"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -50,10 +53,20 @@
         android:id="@+id/postListFragment"
         android:name="com.example.noamsway.ui.postList.postListFragment"
         android:label="Posts List"
-        tools:layout="@layout/post_list_fragment" />
+        tools:layout="@layout/post_list_fragment" >
+        <action
+            android:id="@+id/action_postListFragment_to_newPostFragment"
+            app:destination="@id/newPostFragment"
+            app:popUpTo="@id/postListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_contact_us"
         android:name="com.example.noamsway.ui.ContactUsFragment"
         android:label="Contact Us"
         tools:layout="@layout/contact_us_fragment" />
+    <fragment
+        android:id="@+id/newPostFragment"
+        android:name="com.example.noamsway.ui.newPost.NewPostFragment"
+        android:label="new_post_fragment"
+        tools:layout="@layout/new_post_fragment" />
 </navigation>
