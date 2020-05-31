@@ -14,6 +14,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription="add"
         android:src="@drawable/id_add"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -21,6 +22,6 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#C0DFB9" />
+        android:background="@color/backgroundColor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

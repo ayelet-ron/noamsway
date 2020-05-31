@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,15 +16,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
+import com.example.noamsway.model.Model;
+import com.example.noamsway.ui.home.HomeFragment;
 
 public class SignUpFragment extends Fragment {
     private EditText fullName;
     private EditText email;
     private EditText password;
+    private ProgressBar progressBar;
     private EditText confirmPassword;
     private EditText userName;
     private Button signUpButton;
@@ -46,6 +52,8 @@ public class SignUpFragment extends Fragment {
         this.confirmPassword = root.findViewById(R.id.signup_confirm_password);
         this.signUpButton = root.findViewById(R.id.signUpButton);
         this.moveToSignIn = root.findViewById(R.id.moveToSignIn);
+        progressBar = root.findViewById(R.id.signin_progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +80,12 @@ public class SignUpFragment extends Fragment {
                     confirmPassword.setError("Passwords do not match");
                     confirmPassword.requestFocus();
                 }
-
+                if(!emailText.isEmpty() && !passwordText.isEmpty() && !fullNameText.isEmpty()){
+                    progressBar.setVisibility(View.VISIBLE);
+                    Model.instance.signUp(emailText,passwordText,fullNameText);
+                    Intent intToMain = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intToMain);
+                }
             }
         });
         moveToSignIn.setOnClickListener(new View.OnClickListener() {

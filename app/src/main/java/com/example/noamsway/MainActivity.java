@@ -15,8 +15,9 @@ import com.example.noamsway.model.Model;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    public boolean isLoggedIn = true;
+    public boolean isLoggedIn = false;
     private AppBarConfiguration mAppBarConfiguration;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +34,16 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_category, R.id.nav_login, R.id.nav_contact_us, R.id.nav_my_posts, R.id.nav_my_profile)
+                R.id.nav_home, R.id.nav_category, R.id.nav_login, R.id.nav_contact_us, R.id.nav_my_posts, R.id.nav_user_profile)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        if (isLoggedIn) {
-            navigationView.getMenu().setGroupVisible(R.id.logedin_group, true);
-            navigationView.getMenu().setGroupVisible(R.id.not_login_group, false);
-        } else {
-            navigationView.getMenu().setGroupVisible(R.id.logedin_group, false);
-            navigationView.getMenu().setGroupVisible(R.id.not_login_group, true);
-        }
-
     }
 
     @Override
@@ -63,12 +56,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        isLoggedIn = Model.instance.areUserLoggedIn();
+        if (isLoggedIn) {
+            navigationView.getMenu().setGroupVisible(R.id.logedin_group, true);
+            navigationView.getMenu().setGroupVisible(R.id.not_login_group, false);
+        } else {
+            navigationView.getMenu().setGroupVisible(R.id.logedin_group, false);
+            navigationView.getMenu().setGroupVisible(R.id.not_login_group, true);
+        }
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        isLoggedIn = Model.instance.areUserLoggedIn();
     }
 }

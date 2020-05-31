@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 public class postListFragment extends Fragment implements RecyclerViewClickListener {
     NavController nav;
     FloatingActionButton fab;
-    ArrayList<Post> postsList = new ArrayList<>();;
+    ArrayList<Post> postsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PostAdapter adapter;
     private PostListViewModel postListViewModel;
@@ -58,7 +59,14 @@ public class postListFragment extends Fragment implements RecyclerViewClickListe
             @Override
             public void onClick(View view) {
                 NavController nav = NavHostFragment.findNavController(postListFragment.this);
-                nav.navigate(R.id.action_postListFragment_to_newPostFragment);
+                if(Model.instance.areUserLoggedIn()){
+                    postListFragmentDirections.ActionPostListFragmentToNewPostFragment action = postListFragmentDirections.actionPostListFragmentToNewPostFragment(categoryName);
+                    nav.navigate(action);
+                }
+                else{
+                    Toast.makeText(getActivity(),"You Must Login Before Posting New Post",Toast.LENGTH_SHORT).show();
+                    nav.navigate(R.id.action_postListFragment_to_nav_login);
+                }
             }
         });
         return this.root;
@@ -71,6 +79,9 @@ public class postListFragment extends Fragment implements RecyclerViewClickListe
     @Override
     public void onItemClick(int position) {
         Log.d("TAG","row was clicked" + position);
+        NavController nav = NavHostFragment.findNavController(this);
+        postListFragmentDirections.ActionPostListFragmentToPostDetailsFragment action = postListFragmentDirections.actionPostListFragmentToPostDetailsFragment(postsList.get(position));
+        nav.navigate(action);
 //        NavController nav = NavHostFragment.findNavController(this);
 //        nav.navigate(R.id.action_nav_category_to_postListFragment);
     }
@@ -81,4 +92,5 @@ public class postListFragment extends Fragment implements RecyclerViewClickListe
 //        //mViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
 //        // TODO: Use the ViewModel
 //    }
+
 }
