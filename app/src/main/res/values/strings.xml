@@ -10,6 +10,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_categories">Categories</string>
     <string name="menu_login">Login</string>
+    <string name="menu_my_posts">"My Posts"</string>
+    <string name="menu_my_profile">"My Profile"</string>
     <string name="menu_contact_us">"Contact Us"</string>
 
     <string name="home_second">Home Second</string>

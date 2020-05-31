@@ -58,12 +58,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
             this.postAuthor = itemView.findViewById(R.id.txt_post_title);
             this.cardView = itemView.findViewById(R.id.cardview_item);
             this.postImage = itemView.findViewById(R.id.img_post);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    recyclerViewClickListener.onItemClick(getAdapterPosition());
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerViewClickListener.onItemClick(getAdapterPosition());
+                }
+            });
 
         }
 

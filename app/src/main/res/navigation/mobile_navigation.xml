@@ -60,15 +60,41 @@
         <argument
             android:name="category_name"
             app:argType="string" />
+        <action
+            android:id="@+id/action_postListFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment"
+            app:popUpTo="@id/postListFragment" />
+        <action
+            android:id="@+id/action_postListFragment_to_nav_login"
+            app:destination="@id/nav_login"
+            app:popUpTo="@id/postListFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_contact_us"
-        android:name="com.example.noamsway.ui.ContactUsFragment"
+        android:name="com.example.noamsway.ui.contactUs.ContactUsFragment"
         android:label="Contact Us"
         tools:layout="@layout/contact_us_fragment" />
     <fragment
         android:id="@+id/newPostFragment"
         android:name="com.example.noamsway.ui.newPost.NewPostFragment"
         android:label="new_post_fragment"
-        tools:layout="@layout/new_post_fragment" />
+        tools:layout="@layout/new_post_fragment" >
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_user_profile"
+        android:name="com.example.noamsway.ui.userProfile.UserProfileFragment"
+        android:label="user_profile_fragment"
+        tools:layout="@layout/user_profile_fragment" />
+    <fragment
+        android:id="@+id/postDetailsFragment"
+        android:name="com.example.noamsway.ui.postDetails.PostDetailsFragment"
+        android:label="post_details_fragment"
+        tools:layout="@layout/post_details_fragment" >
+        <argument
+            android:name="post"
+            app:argType="com.example.noamsway.model.Post" />
+    </fragment>
 </navigation>

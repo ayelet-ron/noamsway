@@ -1,11 +1,13 @@
 package com.example.noamsway.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,11 +17,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
+import com.example.noamsway.model.Model;
+import com.example.noamsway.ui.home.HomeFragment;
 
 public class SignInFragment extends Fragment {
     private EditText email;
     private EditText password;
+    private ProgressBar progressBar;
     private Button loginButton;
     private TextView moveToSignUp;
     private SignInViewModel signInViewModel;
@@ -33,6 +39,8 @@ public class SignInFragment extends Fragment {
         this.password = root.findViewById(R.id.login_password);
         this.loginButton = root.findViewById(R.id.loginButton);
         this.moveToSignUp = root.findViewById(R.id.moveToSingUp);
+        progressBar = root.findViewById(R.id.login_progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +57,12 @@ public class SignInFragment extends Fragment {
                     password.setError("Please enter your password");
                     password.requestFocus();
                 }
-
+                if(!emailText.isEmpty() && !passwordText.isEmpty()) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    Model.instance.login(emailText,passwordText);
+                    Intent intToMain = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intToMain);
+                }
             }
         });
         moveToSignUp.setOnClickListener(new View.OnClickListener() {

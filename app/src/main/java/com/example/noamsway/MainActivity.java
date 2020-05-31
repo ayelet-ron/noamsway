@@ -2,7 +2,6 @@ package com.example.noamsway;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,13 +11,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.noamsway.model.Model;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
-
+    public boolean isLoggedIn = false;
     private AppBarConfiguration mAppBarConfiguration;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_category, R.id.nav_login, R.id.nav_contact_us)
+                R.id.nav_home, R.id.nav_category, R.id.nav_login, R.id.nav_contact_us, R.id.nav_my_posts, R.id.nav_user_profile)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -57,7 +56,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        isLoggedIn = Model.instance.areUserLoggedIn();
+        if (isLoggedIn) {
+            navigationView.getMenu().setGroupVisible(R.id.logedin_group, true);
+            navigationView.getMenu().setGroupVisible(R.id.not_login_group, false);
+        } else {
+            navigationView.getMenu().setGroupVisible(R.id.logedin_group, false);
+            navigationView.getMenu().setGroupVisible(R.id.not_login_group, true);
+        }
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    public void onStart() {
+        super.onStart();
     }
 }

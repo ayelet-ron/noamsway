@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
-    tools:context=".ui.ContactUsFragment">
+    android:background="@color/backgroundColor"
+    tools:context=".ui.contactUs.ContactUsFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -13,11 +13,9 @@
         android:layout_height="800dp"
         android:adjustViewBounds="true"
         android:background="@drawable/contect_us"
-        android:backgroundTint="#6DFFFFFF"
         android:baselineAlignBottom="false"
         android:cropToPadding="false"
         android:fitsSystemWindows="false"
-        android:foregroundTint="#FFFFFF"
         android:src="@drawable/contect_us" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </FrameLayout>
