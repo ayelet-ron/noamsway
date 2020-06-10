@@ -40,7 +40,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
 
     @Override
     public int getItemCount() {
-        return this.categoryPosts.size();
+        if(categoryPosts!=null){
+            return this.categoryPosts.size();
+        }
+        else{
+            return 0;
+        }
+    }
+    public void setPosts(ArrayList<Post> dataList){
+        categoryPosts = dataList;
+        notifyDataSetChanged();
     }
 
     class PostRowViewHolder extends RecyclerView.ViewHolder {
@@ -48,7 +57,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
         CardView cardView;
         TextView postTitle;
         TextView postAuthor;
-        TextView postDescription;
         ImageView postImage;
         Post post;
 
@@ -68,10 +76,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
         }
 
         public void bind(Post post) {
-            //this.cardView.setBackgroundResource(post.image);
             this.postImage.setBackgroundResource(post.image);
             this.postTitle.setText(post.title);
-            this.postAuthor.setText(post.authorName);
+            this.postAuthor.setText(post.user.fullName);
             this.post = post;
         }
     }

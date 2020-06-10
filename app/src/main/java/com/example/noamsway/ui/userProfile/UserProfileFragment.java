@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
 import com.example.noamsway.model.Model;
+import com.example.noamsway.model.ModelAuth;
 
 public class UserProfileFragment extends Fragment {
     private TextView email;
@@ -36,12 +37,12 @@ public class UserProfileFragment extends Fragment {
         logout_button = root.findViewById(R.id.logoutButton);
         email = root.findViewById(R.id.user_email);
         name = root.findViewById(R.id.user_name);
-        name.setText(Model.instance.getUserFullName());
-        email.setText(Model.instance.getUserEmail());
+        name.setText(ModelAuth.instance.getUserFullName());
+        email.setText(ModelAuth.instance.getUserEmail());
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Model.instance.longout();
+                ModelAuth.instance.longout();
                 Intent intToMain = new Intent(getActivity(), MainActivity.class);
                 startActivity(intToMain);
             }

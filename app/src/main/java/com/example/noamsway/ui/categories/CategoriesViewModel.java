@@ -4,16 +4,20 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class CategoriesViewModel extends ViewModel {
+import com.example.noamsway.model.Category;
+import com.example.noamsway.model.CategoryModel;
 
-    private MutableLiveData<String> mText;
+import java.util.ArrayList;
+
+public class CategoriesViewModel extends ViewModel {
+    private LiveData<ArrayList<Category>> categoriesListData;
 
     public CategoriesViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
     }
-
-    public LiveData<String> getText() {
-        return mText;
-    }
+//    public LiveData<ArrayList<Category>> getData(){
+//        if(categoriesListData==null){
+//            categoriesListData = CategoryModel.getAllCategories();
+//        }
+//        return categoriesListData;
+//    }
 }

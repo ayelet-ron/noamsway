@@ -23,7 +23,10 @@ import android.widget.Toast;
 import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
 import com.example.noamsway.model.Model;
+import com.example.noamsway.model.ModelAuth;
+import com.example.noamsway.model.User;
 import com.example.noamsway.ui.home.HomeFragment;
+import com.example.noamsway.utils.Listener;
 
 public class SignUpFragment extends Fragment {
     private EditText fullName;
@@ -82,9 +85,19 @@ public class SignUpFragment extends Fragment {
                 }
                 if(!emailText.isEmpty() && !passwordText.isEmpty() && !fullNameText.isEmpty()){
                     progressBar.setVisibility(View.VISIBLE);
-                    Model.instance.signUp(emailText,passwordText,fullNameText);
-                    Intent intToMain = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intToMain);
+                    User user = new User(emailText,fullNameText,passwordText);
+                    ModelAuth.instance.signUp(user, new Listener<Boolean>() {
+                        @Override
+                        public void onComplete(Boolean data) {
+                            if(data){
+                                Intent intToMain = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intToMain);
+                            }
+                            else{
+                                //Toast.makeText(getActivity(),"Login failed due to incorrect password or email",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });

@@ -56,18 +56,17 @@
         <action
             android:id="@+id/action_postListFragment_to_newPostFragment"
             app:destination="@id/newPostFragment"
-            app:popUpTo="@id/postListFragment" />
+            app:popUpToInclusive="true" />
         <argument
             android:name="category_name"
             app:argType="string" />
         <action
             android:id="@+id/action_postListFragment_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment"
-            app:popUpTo="@id/postListFragment" />
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_postListFragment_to_nav_login"
-            app:destination="@id/nav_login"
-            app:popUpTo="@id/postListFragment" />
+            app:destination="@id/nav_login" />
     </fragment>
     <fragment
         android:id="@+id/nav_contact_us"
@@ -82,6 +81,9 @@
         <argument
             android:name="category"
             app:argType="string" />
+        <action
+            android:id="@+id/action_newPostFragment_to_postListFragment"
+            app:destination="@id/postListFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_user_profile"
@@ -96,5 +98,23 @@
         <argument
             android:name="post"
             app:argType="com.example.noamsway.model.Post" />
+        <action
+            android:id="@+id/action_postDetailsFragment_to_postListFragment"
+            app:destination="@id/postListFragment" >
+            <argument
+                android:name="category_name" />
+        </action>
+        <action
+            android:id="@+id/action_postDetailsFragment_to_nav_my_posts"
+            app:destination="@id/nav_my_posts" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_my_posts"
+        android:name="com.example.noamsway.ui.postList.nav_my_posts"
+        android:label="nav_my_posts"
+        tools:layout="@layout/post_list_fragment">
+        <action
+            android:id="@+id/action_nav_my_posts_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
     </fragment>
 </navigation>

@@ -3,35 +3,71 @@ package com.example.noamsway.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.firestore.FieldValue;
+
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class Post implements Serializable {
     @PrimaryKey
     public String postId;
-    public String userId;
     public int image;
     public String title;
     public String description;
-    public String authorName;
+    public User user;
     public Category category;
+//    public double lastUpdate;
+//    public boolean isDeleted;
 
-    public Post(int image, String title, String description, String authorName,Category category) {
+    public Post(int image, String title, String description, User user,Category category) {
         this.image = image;
         this.title = title;
         this.description = description;
-        this.authorName = authorName;
+        this.user = user;
         this.category=category;
+    }
+    public Post(int image, String title, String description, User user,Category category,String postId) {
+        this.image = image;
+        this.title = title;
+        this.description = description;
+        this.user = user;
+        this.category=category;
+        this.postId = postId;
+    }
+    public Post(int image, String title, String description, User user) {
+        this.image = image;
+        this.title = title;
+        this.description = description;
+        this.user = user;
     }
     public Post() {
     }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public Map<String,Object> toMap(){
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("postId",postId);
+        result.put("title",title);
+        result.put("image",image);
+        result.put("description",description);
+        result.put("user",user);
+        result.put("category",category);
+       // result.put("lastUpdate", FieldValue.serverTimestamp());
+        //result.put("isDeleted",isDeleted);
+        return result;
     }
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setTitle(String title) {
@@ -42,9 +78,6 @@ public class Post implements Serializable {
         this.description = description;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
 
     public void setCategory(Category category) {
         this.category = category;
@@ -58,9 +91,6 @@ public class Post implements Serializable {
         return postId;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
     public int getImage() {
         return image;
@@ -72,10 +102,6 @@ public class Post implements Serializable {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getAuthorName() {
-        return authorName;
     }
 
     public Category getCategory() {

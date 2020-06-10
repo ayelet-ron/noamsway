@@ -1,5 +1,6 @@
 package com.example.noamsway.ui.postList;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,57 +10,54 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
-import com.example.noamsway.model.Model;
+import com.example.noamsway.model.ModelAuth;
 import com.example.noamsway.model.Post;
 import com.example.noamsway.ui.categories.CategoriesFragmentArgs;
-import com.example.noamsway.utils.RecyclerViewClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 
-public class postListFragment extends Fragment implements RecyclerViewClickListener {
-    NavController nav;
-    FloatingActionButton fab;
-    ArrayList<Post> postsList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private PostAdapter adapter;
-    private PostListViewModel postListViewModel;
-    private String categoryName;
-    View root;
+public class postListFragment extends PostLists {
 
 
     public postListFragment() {
+        super();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        postListViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
+        categoryName = CategoriesFragmentArgs.fromBundle(getArguments()).getCategoryName();
+        liveDataPosts = postListViewModel.getData(categoryName);
+        liveDataPosts.observe(this, new Observer<ArrayList<Post>>() {
+            @Override
+            public void onChanged(ArrayList<Post> posts) {
+                postsList = posts;
+                adapter.setPosts(postsList);
+            }
+        });
+
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        postListViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
-        root = inflater.inflate(R.layout.post_list_fragment, container, false);
-        recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        categoryName = CategoriesFragmentArgs.fromBundle(getArguments()).getCategoryName();
-        postsList = Model.instance.getAllPostOfCategory(categoryName);
-        this.adapter = new PostAdapter(postsList, this);
-        recyclerView.setAdapter(this.adapter);
-        FloatingActionButton fab = root.findViewById(R.id.fab);
+        root = super.onCreateView(inflater, container, savedInstanceState);
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(categoryName);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavController nav = NavHostFragment.findNavController(postListFragment.this);
-                if(Model.instance.areUserLoggedIn()){
+                if(ModelAuth.instance.areUserLoggedIn()){
                     postListFragmentDirections.ActionPostListFragmentToNewPostFragment action = postListFragmentDirections.actionPostListFragmentToNewPostFragment(categoryName);
                     nav.navigate(action);
                 }
@@ -69,12 +67,7 @@ public class postListFragment extends Fragment implements RecyclerViewClickListe
                 }
             }
         });
-        return this.root;
-    }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+        return root;
     }
     @Override
     public void onItemClick(int position) {
@@ -82,15 +75,5 @@ public class postListFragment extends Fragment implements RecyclerViewClickListe
         NavController nav = NavHostFragment.findNavController(this);
         postListFragmentDirections.ActionPostListFragmentToPostDetailsFragment action = postListFragmentDirections.actionPostListFragmentToPostDetailsFragment(postsList.get(position));
         nav.navigate(action);
-//        NavController nav = NavHostFragment.findNavController(this);
-//        nav.navigate(R.id.action_nav_category_to_postListFragment);
     }
-
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        //mViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
-//        // TODO: Use the ViewModel
-//    }
-
 }
