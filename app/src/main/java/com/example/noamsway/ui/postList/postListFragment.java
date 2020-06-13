@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
@@ -53,6 +54,13 @@ public class postListFragment extends PostLists {
                              @Nullable Bundle savedInstanceState) {
         root = super.onCreateView(inflater, container, savedInstanceState);
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(categoryName);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                postListViewModel.refreshCategoryPosts();
+                swipeRefresh.setRefreshing(false);
+            }
+        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +81,7 @@ public class postListFragment extends PostLists {
     public void onItemClick(int position) {
         Log.d("TAG","row was clicked" + position);
         NavController nav = NavHostFragment.findNavController(this);
-        postListFragmentDirections.ActionPostListFragmentToPostDetailsFragment action = postListFragmentDirections.actionPostListFragmentToPostDetailsFragment(postsList.get(position));
+        postListFragmentDirections.ActionPostListFragmentToPostDetailsFragment action = postListFragmentDirections.actionPostListFragmentToPostDetailsFragment(postsList.get(position),false);
         nav.navigate(action);
     }
 }

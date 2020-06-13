@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.noamsway.R;
 import com.example.noamsway.model.Post;
 import com.example.noamsway.utils.RecyclerViewClickListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -76,7 +77,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
         }
 
         public void bind(Post post) {
-            this.postImage.setBackgroundResource(post.image);
+            Picasso.get().load(post.image).placeholder(R.drawable.place_holder).into(postImage);
             this.postTitle.setText(post.title);
             this.postAuthor.setText(post.user.fullName);
             this.post = post;

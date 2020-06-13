@@ -1,6 +1,11 @@
 package com.example.noamsway.model;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User implements Serializable {
     public String email;
@@ -41,5 +46,20 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("email", email);
+        result.put("fullName", fullName);
+        result.put("password", password);
+        return result;
+    }
+    public static User factory(Map<String, Object> json){
+        User user = new User();
+        user.setEmail((String)json.get("email"));
+        user.setFullName((String)json.get("fullName"));
+        return user;
     }
 }

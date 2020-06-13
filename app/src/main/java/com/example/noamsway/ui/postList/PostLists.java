@@ -17,6 +17,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
@@ -37,6 +38,7 @@ public class PostLists extends Fragment implements RecyclerViewClickListener {
     PostListViewModel postListViewModel;
     String categoryName;
     View root;
+    SwipeRefreshLayout swipeRefresh;
 
     @Override
     public void onAttach(Context context) {
@@ -48,6 +50,7 @@ public class PostLists extends Fragment implements RecyclerViewClickListener {
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.post_list_fragment, container, false);
         fab = root.findViewById(R.id.fab);
+        swipeRefresh = root.findViewById(R.id.posts_list_swipe_refresh);
         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

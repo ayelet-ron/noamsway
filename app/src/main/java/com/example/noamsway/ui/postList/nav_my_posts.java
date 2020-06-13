@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +53,13 @@ public class nav_my_posts extends PostLists {
                              @Nullable Bundle savedInstanceState) {
         root = super.onCreateView(inflater,container,savedInstanceState);
         fab.setVisibility(View.INVISIBLE);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                postListViewModel.refreshMyPost();
+                swipeRefresh.setRefreshing(false);
+            }
+        });
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("My Posts");
         return root;
     }
@@ -59,7 +67,7 @@ public class nav_my_posts extends PostLists {
     public void onItemClick(int position) {
         Log.d("TAG","row was clicked" + position);
         NavController nav = NavHostFragment.findNavController(this);
-        nav_my_postsDirections.ActionNavMyPostsToPostDetailsFragment action = nav_my_postsDirections.actionNavMyPostsToPostDetailsFragment(postsList.get(position));
+        nav_my_postsDirections.ActionNavMyPostsToPostDetailsFragment action = nav_my_postsDirections.actionNavMyPostsToPostDetailsFragment(postsList.get(position),true);
         nav.navigate(action);
     }
 }

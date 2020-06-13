@@ -3,6 +3,7 @@ package com.example.noamsway.model;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.noamsway.MyApplication;
 import com.example.noamsway.utils.Listener;
 
 import java.util.ArrayList;
@@ -41,6 +42,10 @@ public class PostModel {
         return liveData;
     }
     public LiveData<ArrayList<Post>> getAllPostsOfSpecificUser(String userEmail){
+        //get last update date
+        //MyApplication.context.getSharedPreferences()
+                //how to set last update
+
         MutableLiveData<ArrayList<Post>> liveData = new MutableLiveData<>();
         liveData.setValue(new ArrayList<>());
         PostFirebase.getAllPostsOfSpecificUser(userEmail,new Listener<ArrayList<Post>>() {

@@ -71,6 +71,8 @@
         android:layout_width="405dp"
         android:layout_height="55dp"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_name" />

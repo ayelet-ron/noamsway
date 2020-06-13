@@ -30,4 +30,11 @@ public class PostListViewModel extends ViewModel {
         }
         return userPostsListData;
     }
+    public void refreshMyPost(){
+        //need to call refresh that only update the local DB reference eliave
+    }
+    public void refreshCategoryPosts(){
+        //need to call refresh that only update the local DB reference eliave
+
+    }
 }

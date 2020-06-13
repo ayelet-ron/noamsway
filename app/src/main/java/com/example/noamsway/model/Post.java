@@ -3,10 +3,10 @@ package com.example.noamsway.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,53 +14,101 @@ import java.util.Map;
 public class Post implements Serializable {
     @PrimaryKey
     public String postId;
-    public int image;
+    public String image;
     public String title;
     public String description;
     public User user;
     public Category category;
-//    public double lastUpdate;
-//    public boolean isDeleted;
+    public long lastUpdate;
+    public boolean isDeleted;
 
-    public Post(int image, String title, String description, User user,Category category) {
-        this.image = image;
-        this.title = title;
-        this.description = description;
-        this.user = user;
-        this.category=category;
+    public String getImage() {
+        return image;
     }
-    public Post(int image, String title, String description, User user,Category category,String postId) {
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public double getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Post(String image, String title, String description, User user, Category category) {
         this.image = image;
         this.title = title;
         this.description = description;
         this.user = user;
-        this.category=category;
+        this.category = category;
+        this.isDeleted = false;
+    }
+    public Post(String title, String description, User user, Category category) {
+        this.title = title;
+        this.description = description;
+        this.user = user;
+        this.category = category;
+        this.isDeleted = false;
+    }
+
+    public Post(String image, String title, String description, User user, Category category, String postId) {
+        this.image = image;
+        this.title = title;
+        this.description = description;
+        this.user = user;
+        this.category = category;
         this.postId = postId;
+        this.isDeleted = false;
     }
-    public Post(int image, String title, String description, User user) {
+
+    public Post(String image, String title, String description, User user) {
         this.image = image;
         this.title = title;
         this.description = description;
         this.user = user;
+        this.isDeleted = false;
     }
+
     public Post() {
     }
-    public Map<String,Object> toMap(){
-        HashMap<String,Object> result = new HashMap<>();
-        result.put("postId",postId);
-        result.put("title",title);
-        result.put("image",image);
-        result.put("description",description);
-        result.put("user",user);
-        result.put("category",category);
-       // result.put("lastUpdate", FieldValue.serverTimestamp());
-        //result.put("isDeleted",isDeleted);
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("postId", postId);
+        result.put("title", title);
+        result.put("image", image);
+        result.put("description", description);
+        result.put("user", user);
+        result.put("category", category);
+        result.put("lastUpdate", FieldValue.serverTimestamp());
+        result.put("isDeleted", isDeleted);
         return result;
     }
-
-    public void setImage(int image) {
-        this.image = image;
+    public static Post factory(Map<String, Object> json){
+        Post post = new Post();
+        post.setTitle((String)json.get("title"));
+        post.setPostId((String)json.get("postId"));
+        post.setImage((String)json.get("image"));
+        post.setDescription((String)json.get("description"));
+        post.setUser(User.factory((Map<String, Object>) json.get("user")));
+        post.setCategory(Category.factory((Map<String, Object>) json.get("category")));
+        Timestamp ts = (Timestamp)json.get("lastUpdated");
+        if (ts != null) post.lastUpdate = ts.getSeconds();
+        post.setDeleted((Boolean)json.get("isDeleted"));
+        return post;
     }
+
 
     public User getUser() {
         return user;
@@ -91,10 +139,6 @@ public class Post implements Serializable {
         return postId;
     }
 
-
-    public int getImage() {
-        return image;
-    }
 
     public String getTitle() {
         return title;

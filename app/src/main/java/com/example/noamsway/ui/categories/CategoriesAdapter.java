@@ -64,7 +64,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         }
 
         public void bind(Category category) {
-            this.categoryImage.setImageResource(category.img);
+            this.categoryImage.setImageResource((int) category.img);
             this.category = category;
         }
     }

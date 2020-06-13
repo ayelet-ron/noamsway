@@ -36,8 +36,7 @@
         tools:layout="@layout/fragment_categories" >
         <action
             android:id="@+id/action_nav_category_to_postListFragment"
-            app:destination="@id/postListFragment"
-            app:popUpTo="@id/nav_category" />
+            app:destination="@id/postListFragment" />
         <argument
             android:name="category_name"
             app:argType="string" />
@@ -56,7 +55,7 @@
         <action
             android:id="@+id/action_postListFragment_to_newPostFragment"
             app:destination="@id/newPostFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <argument
             android:name="category_name"
             app:argType="string" />
@@ -83,7 +82,9 @@
             app:argType="string" />
         <action
             android:id="@+id/action_newPostFragment_to_postListFragment"
-            app:destination="@id/postListFragment" />
+            app:destination="@id/postListFragment"
+            app:popUpTo="@id/nav_category"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/nav_user_profile"
@@ -100,13 +101,17 @@
             app:argType="com.example.noamsway.model.Post" />
         <action
             android:id="@+id/action_postDetailsFragment_to_postListFragment"
-            app:destination="@id/postListFragment" >
-            <argument
-                android:name="category_name" />
+            app:destination="@id/postListFragment"
+            app:popUpToInclusive="false">
+            <argument android:name="category_name" />
         </action>
         <action
             android:id="@+id/action_postDetailsFragment_to_nav_my_posts"
-            app:destination="@id/nav_my_posts" />
+            app:destination="@id/nav_my_posts"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="My_posts"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/nav_my_posts"
