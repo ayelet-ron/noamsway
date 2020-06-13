@@ -38,10 +38,10 @@
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/post_name"
                 android:layout_width="match_parent"
-                android:layout_height="57dp"
+                android:layout_height="46dp"
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textSize="18sp" />
@@ -68,18 +68,18 @@
 
                     <ImageView
                         android:id="@+id/category_icon"
-                        android:layout_width="128dp"
+                        android:layout_width="158dp"
                         android:layout_height="89dp"
                         android:layout_weight="1"
                         android:src="@drawable/trip_icon" />
 
-                    <TextView
-                        android:id="@+id/category_name"
-                        android:layout_width="match_parent"
+                    <Spinner
+                        android:id="@+id/spinner_category_name"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textAlignment="center"
-                        android:textSize="24sp" />
+                        android:clickable="false" />
+
                 </LinearLayout>
             </ScrollView>
 
@@ -93,10 +93,10 @@
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/post_description"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="92dp"
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textSize="18sp" />

@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.noamsway.model.Model;
+import com.example.noamsway.model.ModelAuth;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        isLoggedIn = Model.instance.areUserLoggedIn();
+        isLoggedIn = ModelAuth.instance.areUserLoggedIn();
         if (isLoggedIn) {
             navigationView.getMenu().setGroupVisible(R.id.logedin_group, true);
             navigationView.getMenu().setGroupVisible(R.id.not_login_group, false);

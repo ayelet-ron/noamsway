@@ -15,20 +15,19 @@ import com.example.noamsway.utils.RecyclerViewClickListener;
 
 import java.util.ArrayList;
 
-public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.CategoryRowViewHolder> {
-
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CategoryRowViewHolder> {
     private ArrayList<Category> dataList;
     private RecyclerViewClickListener recyclerViewClickListener;
 
-    public CategorieAdapter(ArrayList<Category> dataList) {
-        this.dataList = dataList;
-    }
 
-    public CategorieAdapter(ArrayList<Category> dataList, RecyclerViewClickListener recyclerViewClickListener) {
+    public CategoriesAdapter(ArrayList<Category> dataList, RecyclerViewClickListener recyclerViewClickListener) {
         this.dataList = dataList;
         this.recyclerViewClickListener = recyclerViewClickListener;
     }
-
+    public void setPosts(ArrayList<Category> dataList){
+        this.dataList = dataList;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public CategoryRowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,7 +64,7 @@ public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.Cate
         }
 
         public void bind(Category category) {
-            this.categoryImage.setImageResource(category.img);
+            this.categoryImage.setImageResource((int) category.img);
             this.category = category;
         }
     }
