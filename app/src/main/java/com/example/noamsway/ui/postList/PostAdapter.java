@@ -16,12 +16,13 @@ import com.example.noamsway.utils.RecyclerViewClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHolder> {
-    private ArrayList<Post> categoryPosts;
+    private List<Post> categoryPosts;
     private RecyclerViewClickListener recyclerViewClickListener;
 
-    public PostAdapter(ArrayList<Post> dataList, RecyclerViewClickListener recyclerViewClickListener) {
+    public PostAdapter(List<Post> dataList, RecyclerViewClickListener recyclerViewClickListener) {
         this.categoryPosts = dataList;
         this.recyclerViewClickListener = recyclerViewClickListener;
     }
@@ -48,7 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
             return 0;
         }
     }
-    public void setPosts(ArrayList<Post> dataList){
+    public void setPosts(List<Post> dataList){
         categoryPosts = dataList;
         notifyDataSetChanged();
     }

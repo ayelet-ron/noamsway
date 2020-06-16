@@ -1,10 +1,15 @@
 package com.example.noamsway.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -13,11 +18,14 @@ import java.util.Map;
 @Entity
 public class Post implements Serializable {
     @PrimaryKey
+    @NonNull
     public String postId;
     public String image;
     public String title;
     public String description;
+    @TypeConverters(DataConverter.class)
     public User user;
+    @TypeConverters(DataConverter.class)
     public Category category;
     public long lastUpdate;
     public boolean isDeleted;
@@ -54,6 +62,7 @@ public class Post implements Serializable {
         this.category = category;
         this.isDeleted = false;
     }
+
     public Post(String title, String description, User user, Category category) {
         this.title = title;
         this.description = description;
@@ -95,17 +104,18 @@ public class Post implements Serializable {
         result.put("isDeleted", isDeleted);
         return result;
     }
-    public static Post factory(Map<String, Object> json){
+
+    public static Post factory(Map<String, Object> json) {
         Post post = new Post();
-        post.setTitle((String)json.get("title"));
-        post.setPostId((String)json.get("postId"));
-        post.setImage((String)json.get("image"));
-        post.setDescription((String)json.get("description"));
+        post.setTitle((String) json.get("title"));
+        post.setPostId((String) json.get("postId"));
+        post.setImage((String) json.get("image"));
+        post.setDescription((String) json.get("description"));
         post.setUser(User.factory((Map<String, Object>) json.get("user")));
         post.setCategory(Category.factory((Map<String, Object>) json.get("category")));
-        Timestamp ts = (Timestamp)json.get("lastUpdated");
+        Timestamp ts = (Timestamp) json.get("lastUpdated");
         if (ts != null) post.lastUpdate = ts.getSeconds();
-        post.setDeleted((Boolean)json.get("isDeleted"));
+        post.setDeleted((Boolean) json.get("isDeleted"));
         return post;
     }
 
@@ -131,10 +141,12 @@ public class Post implements Serializable {
         this.category = category;
     }
 
+    @NonNull
     public void setPostId(String postId) {
         this.postId = postId;
     }
 
+    @NonNull
     public String getPostId() {
         return postId;
     }
@@ -150,5 +162,34 @@ public class Post implements Serializable {
 
     public Category getCategory() {
         return category;
+    }
+}
+class DataConverter{
+
+    @TypeConverter
+    public static String userToJson(User user) {
+        GsonBuilder gson = new GsonBuilder();
+        Gson gsonObj = gson.create();
+        return gsonObj.toJson(user.toMap());
+    }
+    @TypeConverter
+    public static String categoryToJson(Category category) {
+        GsonBuilder gson = new GsonBuilder();
+        Gson gsonObj = gson.create();
+        return gsonObj.toJson(category.toMap());
+    }
+    @TypeConverter
+    public static User userFromJson(String string) {
+        GsonBuilder gson = new GsonBuilder();
+        Gson gsonObj = gson.create();
+        Map<String,Object> json = gsonObj.fromJson(string,Map.class);
+        return User.factory(json);
+    }
+    @TypeConverter
+    public static Category categoryToJson(String string) {
+        GsonBuilder gson = new GsonBuilder();
+        Gson gsonObj = gson.create();
+        Map<String,Object> json = gsonObj.fromJson(string,Map.class);
+        return Category.factory(json);
     }
 }

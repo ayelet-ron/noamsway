@@ -6,13 +6,19 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.noamsway.utils.Listener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class PostFirebase {
@@ -25,6 +31,22 @@ public class PostFirebase {
             if (task.isSuccessful()) {
                 postData = new ArrayList<Post>();
                 for (QueryDocumentSnapshot doc : task.getResult()) {
+                    Map<String,Object> json = doc.getData();
+                    Post post = Post.factory(json);
+                    postData.add(post);
+                }
+            }
+            listener.onComplete(postData);
+        });
+    }
+    public static void getAllPostsOfSpecificCategorySince(long since,String categoryName, final Listener<List<Post>> listener){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(since,0);
+        db.collection(POST_COLLECTION).whereEqualTo("category.name",categoryName).whereEqualTo("isDeleted",false).whereGreaterThanOrEqualTo("lastUpdate", ts).get().addOnCompleteListener((task)->{
+            List<Post> postData = null;
+            if(task.isSuccessful()){
+                postData = new LinkedList<>();
+                for(QueryDocumentSnapshot doc : task.getResult()){
                     Map<String,Object> json = doc.getData();
                     Post post = Post.factory(json);
                     postData.add(post);
@@ -48,12 +70,12 @@ public class PostFirebase {
             listener.onComplete(postData);
         });
     }
-    public static void getAllPostsOfSpecificUser(String userEmail, final Listener<ArrayList<Post>> listener){
+    public static void getAllPostsOfSpecificUser(String userEmail, final Listener<List<Post>> listener){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(POST_COLLECTION).whereEqualTo("user.email",userEmail).whereEqualTo("isDeleted",false).get().addOnCompleteListener((task)->{
-            ArrayList<Post> postData = null;
+            List<Post> postData = null;
             if(task.isSuccessful()){
-                postData = new ArrayList<Post>();
+                postData = new LinkedList<>();
                 for(QueryDocumentSnapshot doc : task.getResult()){
                     Map<String,Object> json = doc.getData();
                     Post post = Post.factory(json);

@@ -25,6 +25,7 @@ import com.example.noamsway.model.Post;
 import com.example.noamsway.ui.categories.CategoriesFragmentArgs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,9 +41,9 @@ public class nav_my_posts extends PostLists {
         postListViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
         String email = ModelAuth.instance.getUserEmail();
         liveDataPosts = postListViewModel.getPostsByUser(email);
-        liveDataPosts.observe(this, new Observer<ArrayList<Post>>() {
+        liveDataPosts.observe(this, new Observer<List<Post>>() {
             @Override
-            public void onChanged(ArrayList<Post> posts) {
+            public void onChanged(List<Post> posts) {
                 postsList = posts;
                 adapter.setPosts(postsList);
             }

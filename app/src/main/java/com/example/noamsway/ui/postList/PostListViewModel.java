@@ -13,18 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostListViewModel extends ViewModel {
-    private LiveData<ArrayList<Post>> postsListData;
-    private LiveData<ArrayList<Post>> userPostsListData;
+    private LiveData<List<Post>> postsListData;
+    private LiveData<List<Post>> userPostsListData;
 
     public PostListViewModel() {
     }
-    public LiveData<ArrayList<Post>> getData(String categoryName){
+    public LiveData<List<Post>> getData(String categoryName){
         if(postsListData==null){
             postsListData = PostModel.instance.getAllPostsOfSpecificCategory(categoryName);
         }
         return postsListData;
     }
-    public LiveData<ArrayList<Post>> getPostsByUser(String userEmail){
+    public LiveData<List<Post>> getPostsByUser(String userEmail){
         if(userPostsListData==null){
             userPostsListData = PostModel.instance.getAllPostsOfSpecificUser(userEmail);
         }
