@@ -144,39 +144,39 @@ public class PostDetailsFragment extends Fragment {
                     post.setCategory(editCategory);
                     post.setDescription(postDescription.getText().toString());
                     post.setTitle(postName.getText().toString());
+                    if(isPickedImage){
+                        mViewModel.uploadImage(filePath, new DataCallback() {
+                            @Override
+                            public void onData(String string) {
+                                post.setImage(string);
+                                PostModel.instance.updatePost(post, new Listener<Boolean>() {
+                                    @Override
+                                    public void onComplete(Boolean data) {
+                                        if(data){
+                                            Toast.makeText(getActivity(), "Your Post Was Update Successfully", Toast.LENGTH_SHORT).show();
+                                            moveBack();
+                                            isPickedImage = false;
+                                        }
+                                        else{
+                                            Toast.makeText(getActivity(), "Something went wrong please try again", Toast.LENGTH_SHORT).show();
+                                            moveBack();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+                else{
+                    editSelected=true;
+                    Toast.makeText(getActivity(), "Edit Post", Toast.LENGTH_SHORT).show();
+                    item.setIcon(R.drawable.save_icon);
                     postImage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             chooseImage();
                         }
                     });
-                    if(isPickedImage){
-                        mViewModel.uploadImage(filePath, new DataCallback() {
-                            @Override
-                            public void onData(String string) {
-                                post.setImage(string);
-                            }
-                        });
-                    }
-                    PostModel.instance.updatePost(post, new Listener<Boolean>() {
-                        @Override
-                        public void onComplete(Boolean data) {
-                            if(data){
-                                Toast.makeText(getActivity(), "Your Post Was Update Successfully", Toast.LENGTH_SHORT).show();
-                                moveBack();
-                                isPickedImage = false;
-                            }
-                            else{
-                                Toast.makeText(getActivity(), "Something went wrong please try again", Toast.LENGTH_SHORT).show();
-                                moveBack();
-                            }
-                        }
-                    });
-                }
-                else{
-                    editSelected=true;
-                    Toast.makeText(getActivity(), "Edit Post", Toast.LENGTH_SHORT).show();
-                    item.setIcon(R.drawable.save_icon);
                     enableEdit();
                     authorNameTitle.setVisibility(View.INVISIBLE);
                     authorName.setVisibility(View.INVISIBLE);
@@ -229,6 +229,7 @@ public class PostDetailsFragment extends Fragment {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        isPickedImage = true;
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.example.noamsway.ui.categories.CategoriesFragmentArgs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class postListFragment extends PostLists {
@@ -39,9 +40,9 @@ public class postListFragment extends PostLists {
         postListViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
         categoryName = CategoriesFragmentArgs.fromBundle(getArguments()).getCategoryName();
         liveDataPosts = postListViewModel.getData(categoryName);
-        liveDataPosts.observe(this, new Observer<ArrayList<Post>>() {
+        liveDataPosts.observe(this, new Observer<List<Post>>() {
             @Override
-            public void onChanged(ArrayList<Post> posts) {
+            public void onChanged(List<Post> posts) {
                 postsList = posts;
                 adapter.setPosts(postsList);
             }

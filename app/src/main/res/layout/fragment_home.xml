@@ -8,20 +8,9 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="66dp"
-        android:fontFamily="@font/bevan"
-        android:text="Our Israeli Story"
-        android:textAlignment="center"
-        android:textSize="36sp" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="220dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -52,25 +41,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="217dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="match_parent"
-            android:layout_height="231dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/back" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="130dp">
+        android:layout_height="161dp"
+        android:layout_marginTop="2dp">
 
         <ImageView
             android:id="@+id/imageView10"
-            android:layout_width="wrap_content"
+            android:layout_width="18dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
@@ -83,9 +59,24 @@
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:fontFamily="@font/alegreya_sans_sc_medium"
-            android:text="Our Own Story"
+            android:text="Our Own Israeli Story"
             android:textAlignment="center"
-            android:textSize="52sp" />
+            android:textSize="46sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="217dp"
+        android:layout_marginTop="2dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back" />
     </LinearLayout>
 
 </LinearLayout>

@@ -27,11 +27,12 @@ import com.example.noamsway.utils.RecyclerViewClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostLists extends Fragment implements RecyclerViewClickListener {
     NavController nav;
-    ArrayList<Post> postsList;
-    LiveData<ArrayList<Post>> liveDataPosts;
+    List<Post> postsList;
+    LiveData<List<Post>> liveDataPosts;
     RecyclerView recyclerView;
     PostAdapter adapter;
     FloatingActionButton fab;
