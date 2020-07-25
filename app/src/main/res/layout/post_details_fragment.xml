@@ -69,7 +69,7 @@
                     <ImageView
                         android:id="@+id/category_icon"
                         android:layout_width="158dp"
-                        android:layout_height="89dp"
+                        android:layout_height="85dp"
                         android:layout_weight="1"
                         android:src="@drawable/trip_icon" />
 
@@ -96,7 +96,7 @@
             <EditText
                 android:id="@+id/post_description"
                 android:layout_width="match_parent"
-                android:layout_height="92dp"
+                android:layout_height="88dp"
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textSize="18sp" />

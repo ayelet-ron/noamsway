@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.noamsway.R;
 import com.example.noamsway.model.Category;
 import com.example.noamsway.utils.RecyclerViewClickListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -64,7 +65,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         }
 
         public void bind(Category category) {
-            this.categoryImage.setImageResource((int) category.img);
+            Picasso.get().load(category.img).placeholder(R.drawable.place_holder).into(categoryImage);
             this.category = category;
         }
     }

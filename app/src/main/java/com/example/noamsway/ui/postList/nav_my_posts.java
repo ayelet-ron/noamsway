@@ -2,6 +2,10 @@ package com.example.noamsway.ui.postList;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,25 +16,20 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
 import com.example.noamsway.model.ModelAuth;
 import com.example.noamsway.model.Post;
-import com.example.noamsway.ui.categories.CategoriesFragmentArgs;
+import com.example.noamsway.utils.Listener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class nav_my_posts extends PostLists {
+    String currentUserEmail;
+    Boolean isRefreshing = false;
 
     public nav_my_posts() {
         super();
@@ -39,27 +38,34 @@ public class nav_my_posts extends PostLists {
     public void onAttach(Context context) {
         super.onAttach(context);
         postListViewModel = ViewModelProviders.of(this).get(PostListViewModel.class);
-        String email = ModelAuth.instance.getUserEmail();
-        liveDataPosts = postListViewModel.getPostsByUser(email);
-        liveDataPosts.observe(this, new Observer<List<Post>>() {
-            @Override
-            public void onChanged(List<Post> posts) {
-                postsList = posts;
-                adapter.setPosts(postsList);
-            }
-        });
+        currentUserEmail = ModelAuth.instance.getUserEmail();
+
 
     }
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = super.onCreateView(inflater,container,savedInstanceState);
-        fab.setVisibility(View.INVISIBLE);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefresh.setRefreshing(true);
+        liveDataPosts = postListViewModel.getPostsByUser(currentUserEmail);
+        liveDataPosts.observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
             @Override
-            public void onRefresh() {
-                postListViewModel.refreshMyPost();
+            public void onChanged(List<Post> posts) {
+                postsList = posts;
+                adapter.setPosts(postsList);
                 swipeRefresh.setRefreshing(false);
             }
+        });
+        fab.setVisibility(View.INVISIBLE);
+        swipeRefresh.setOnRefreshListener(()-> {
+            postListViewModel.refreshMyPost(currentUserEmail, new Listener<Boolean>() {
+                @Override
+                public void onComplete(Boolean data) {
+                    if(data){
+                        swipeRefresh.setRefreshing(false);
+                    }
+                }
+            });
+
         });
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("My Posts");
         return root;

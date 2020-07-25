@@ -1,6 +1,7 @@
 package com.example.noamsway.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
@@ -15,20 +16,28 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-@Entity
+@Entity(tableName = "Post")
 public class Post implements Serializable {
     @PrimaryKey
     @NonNull
+    @ColumnInfo(name = "postId")
     public String postId;
+    @ColumnInfo(name = "image")
     public String image;
+    @ColumnInfo(name = "title")
     public String title;
+    @ColumnInfo(name = "description")
     public String description;
-    @TypeConverters(DataConverter.class)
+    @ColumnInfo(name = "user")
+    @TypeConverters(UserConverter.class)
     public User user;
-    @TypeConverters(DataConverter.class)
+    @ColumnInfo(name = "category")
+    @TypeConverters(CategoryConverter.class)
     public Category category;
+    @ColumnInfo(name = "lastUpdate")
     public long lastUpdate;
-    public boolean isDeleted;
+    @ColumnInfo(name = "isDeleted")
+    public Boolean isDeleted;
 
     public String getImage() {
         return image;
@@ -113,7 +122,7 @@ public class Post implements Serializable {
         post.setDescription((String) json.get("description"));
         post.setUser(User.factory((Map<String, Object>) json.get("user")));
         post.setCategory(Category.factory((Map<String, Object>) json.get("category")));
-        Timestamp ts = (Timestamp) json.get("lastUpdated");
+        Timestamp ts = (Timestamp) json.get("lastUpdate");
         if (ts != null) post.lastUpdate = ts.getSeconds();
         post.setDeleted((Boolean) json.get("isDeleted"));
         return post;
@@ -164,7 +173,7 @@ public class Post implements Serializable {
         return category;
     }
 }
-class DataConverter{
+class UserConverter{
 
     @TypeConverter
     public static String userToJson(User user) {
@@ -172,18 +181,22 @@ class DataConverter{
         Gson gsonObj = gson.create();
         return gsonObj.toJson(user.toMap());
     }
-    @TypeConverter
-    public static String categoryToJson(Category category) {
-        GsonBuilder gson = new GsonBuilder();
-        Gson gsonObj = gson.create();
-        return gsonObj.toJson(category.toMap());
-    }
+
     @TypeConverter
     public static User userFromJson(String string) {
         GsonBuilder gson = new GsonBuilder();
         Gson gsonObj = gson.create();
         Map<String,Object> json = gsonObj.fromJson(string,Map.class);
         return User.factory(json);
+    }
+}
+class CategoryConverter{
+
+    @TypeConverter
+    public static String categoryToJson(Category category) {
+        GsonBuilder gson = new GsonBuilder();
+        Gson gsonObj = gson.create();
+        return gsonObj.toJson(category.toMap());
     }
     @TypeConverter
     public static Category categoryToJson(String string) {

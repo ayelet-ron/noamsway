@@ -25,6 +25,12 @@ public class PostModel {
         PostFirebase.updatePost(post,listener);
     }
     public void deletePost(String postId, Listener<Boolean> listener){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppLocalDb.db.postDao().delete(postId);
+            }
+        });
         PostFirebase.deletePost(postId,listener);
     }
     public LiveData<ArrayList<Post>> getAllPosts(){
@@ -54,24 +60,26 @@ public class PostModel {
         refreshPostsCategoryList(categoryName,null);
         return liveData;
     }
-    public LiveData<List<Post>> getAllPostsOfSpecificUser(String userEmail){
-        //get last update date
-        //MyApplication.context.getSharedPreferences()
-                //how to set last update
 
-        MutableLiveData<List<Post>> liveData = new MutableLiveData<>();
-        liveData.setValue(new LinkedList<>());
-        PostFirebase.getAllPostsOfSpecificUser(userEmail,new Listener<List<Post>>() {
-            @Override
-            public void onComplete(List<Post> data) {
-                liveData.setValue(data);
-            }
-        });
+    public LiveData<List<Post>> getAllPostsOfSpecificUser(String userEmail){
+        LiveData<List<Post>> liveData = AppLocalDb.db.postDao().getAllPostsOfSpecificUser(userEmail);
+        refreshMyPostsList(userEmail,null);
         return liveData;
     }
+//    public LiveData<List<Post>> getAllPostsOfSpecificUser_old(String userEmail){
+//        MutableLiveData<List<Post>> liveData = new MutableLiveData<>();
+//        liveData.setValue(new LinkedList<>());
+//        PostFirebase.getAllPostsOfSpecificUser(userEmail,new Listener<List<Post>>() {
+//            @Override
+//            public void onComplete(List<Post> data) {
+//                liveData.setValue(data);
+//            }
+//        });
+//        return liveData;
+//    }
     public void refreshPostsCategoryList(String category,final Listener<Boolean> listener){
         long lastUpdated = MyApplication.context.getSharedPreferences("TAG",MODE_PRIVATE).getLong("PostsLastUpdateDate",0);
-        PostFirebase.getAllPostsOfSpecificCategorySince(lastUpdated,category,new Listener<List<Post>>() {
+        PostFirebase.getAllPostsSince(lastUpdated,new Listener<List<Post>>() {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onComplete(final List<Post> data) {
@@ -86,7 +94,35 @@ public class PostModel {
                         SharedPreferences.Editor edit = MyApplication.context.getSharedPreferences("TAG", MODE_PRIVATE).edit();
                         edit.putLong("PostsLastUpdateDate",lastUpdated);
                         edit.commit();
-                        return "";
+                        return null;
+                    }
+                    @Override
+                    protected void onPostExecute(String s) {
+                        super.onPostExecute(s);
+                        if (listener!=null)  listener.onComplete(true);
+                    }
+                }.execute("");
+            }
+        });
+    }
+    public void refreshMyPostsList(String userEmail,final Listener<Boolean> listener){
+        long lastUpdated = MyApplication.context.getSharedPreferences("TAG",MODE_PRIVATE).getLong("PostsLastUpdateDate",0);
+        PostFirebase.getAllPostsOfSpecificUserSince(lastUpdated,userEmail,new Listener<List<Post>>() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onComplete(final List<Post> data) {
+                new AsyncTask<String,String,String>(){
+                    @Override
+                    protected String doInBackground(String... strings) {
+                        long lastUpdated = 0;
+                        for(Post p : data){
+                            AppLocalDb.db.postDao().insertAll(p);
+                            if (p.lastUpdate > lastUpdated) lastUpdated = p.lastUpdate;
+                        }
+                        SharedPreferences.Editor edit = MyApplication.context.getSharedPreferences("TAG", MODE_PRIVATE).edit();
+                        edit.putLong("PostsLastUpdateDate",lastUpdated);
+                        edit.commit();
+                        return null;
                     }
                     @Override
                     protected void onPostExecute(String s) {

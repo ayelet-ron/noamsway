@@ -94,7 +94,7 @@ public class PostDetailsFragment extends Fragment {
         postName.setText(post.title);
         postDescription.setText(post.description);
         Picasso.get().load(post.image).placeholder(R.drawable.place_holder).into(postImage);
-        categoryIcon.setImageResource((int) post.category.icon);
+        Picasso.get().load(post.category.icon).placeholder(R.drawable.place_holder).into(categoryIcon);
         return root;
     }
 
@@ -113,7 +113,7 @@ public class PostDetailsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-        if (ModelAuth.instance.getUserFullName().equals(post.user.fullName)) {
+        if (ModelAuth.instance.areUserLoggedIn() && ModelAuth.instance.getUserFullName().equals(post.user.fullName)) {
             menuInflater.inflate(R.menu.main, menu);
             menu.getItem(0).setVisible(true);
             menu.getItem(1).setVisible(true);
@@ -166,6 +166,22 @@ public class PostDetailsFragment extends Fragment {
                             }
                         });
                     }
+                    else {
+                        PostModel.instance.updatePost(post, new Listener<Boolean>() {
+                            @Override
+                            public void onComplete(Boolean data) {
+                                if(data){
+                                    Toast.makeText(getActivity(), "Your Post Was Update Successfully", Toast.LENGTH_SHORT).show();
+                                    moveBack();
+                                    isPickedImage = false;
+                                }
+                                else{
+                                    Toast.makeText(getActivity(), "Something went wrong please try again", Toast.LENGTH_SHORT).show();
+                                    moveBack();
+                                }
+                            }
+                        });
+                    }
                 }
                 else{
                     editSelected=true;
@@ -185,7 +201,7 @@ public class PostDetailsFragment extends Fragment {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             editCategory = CategoryModel.instance.getCategoryByName(categoriesNames.get(position));
-                            categoryIcon.setImageResource((int) editCategory.icon);
+                            Picasso.get().load(editCategory.icon).placeholder(R.drawable.place_holder).into(categoryIcon);
                         }
 
                         @Override
@@ -196,7 +212,7 @@ public class PostDetailsFragment extends Fragment {
                 }
                 return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void disableEdit() {

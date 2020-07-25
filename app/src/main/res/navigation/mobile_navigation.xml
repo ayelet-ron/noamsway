@@ -102,12 +102,14 @@
         <action
             android:id="@+id/action_postDetailsFragment_to_postListFragment"
             app:destination="@id/postListFragment"
+            app:popUpTo="@id/nav_category"
             app:popUpToInclusive="false">
             <argument android:name="category_name" />
         </action>
         <action
             android:id="@+id/action_postDetailsFragment_to_nav_my_posts"
             app:destination="@id/nav_my_posts"
+            app:popUpTo="@id/nav_my_posts"
             app:popUpToInclusive="false" />
         <argument
             android:name="My_posts"

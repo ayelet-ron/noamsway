@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.noamsway.MyApplication;
 
-@Database(entities = {Post.class}, version = 10)
+@Database(entities = {Post.class}, version = 18)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract PostDao postDao();
 }
@@ -16,9 +16,10 @@ public class AppLocalDb{
     static public AppLocalDbRepository db =
             Room.databaseBuilder(MyApplication.context,
                     AppLocalDbRepository.class,
-                    "dbFileName.db")
+                    "noamsWayLocalDb.db")
                     .fallbackToDestructiveMigration()
                     .build();
 }
+
 
 
