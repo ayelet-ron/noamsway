@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,10 +40,26 @@ public class PostFirebase {
             listener.onComplete(postData);
         });
     }
+    public static void getAllPostsSince(long since, final Listener<List<Post>> listener){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(since,0);
+        db.collection(POST_COLLECTION).whereGreaterThanOrEqualTo("lastUpdate", ts).get().addOnCompleteListener((task)->{
+            List<Post> postData = null;
+            if(task.isSuccessful()){
+                postData = new LinkedList<>();
+                for(QueryDocumentSnapshot doc : task.getResult()){
+                    Map<String,Object> json = doc.getData();
+                    Post post = Post.factory(json);
+                    postData.add(post);
+                }
+            }
+            listener.onComplete(postData);
+        });
+    }
     public static void getAllPostsOfSpecificCategorySince(long since,String categoryName, final Listener<List<Post>> listener){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Timestamp ts = new Timestamp(since,0);
-        db.collection(POST_COLLECTION).whereEqualTo("category.name",categoryName).whereEqualTo("isDeleted",false).whereGreaterThanOrEqualTo("lastUpdate", ts).get().addOnCompleteListener((task)->{
+        db.collection(POST_COLLECTION).whereEqualTo("category.name",categoryName).whereGreaterThanOrEqualTo("lastUpdate", ts).get().addOnCompleteListener((task)->{
             List<Post> postData = null;
             if(task.isSuccessful()){
                 postData = new LinkedList<>();
@@ -70,9 +87,10 @@ public class PostFirebase {
             listener.onComplete(postData);
         });
     }
-    public static void getAllPostsOfSpecificUser(String userEmail, final Listener<List<Post>> listener){
+    public static void getAllPostsOfSpecificUserSince(long since,String userEmail, final Listener<List<Post>> listener){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(POST_COLLECTION).whereEqualTo("user.email",userEmail).whereEqualTo("isDeleted",false).get().addOnCompleteListener((task)->{
+        Timestamp ts = new Timestamp(since,0);
+        db.collection(POST_COLLECTION).whereEqualTo("user.email",userEmail).whereGreaterThanOrEqualTo("lastUpdate", ts).get().addOnCompleteListener((task)->{
             List<Post> postData = null;
             if(task.isSuccessful()){
                 postData = new LinkedList<>();
@@ -127,7 +145,7 @@ public class PostFirebase {
     }
     public static void deletePost(String postId, final Listener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(POST_COLLECTION).document(postId).update("isDeleted",true).addOnCompleteListener((task)->{
+        db.collection(POST_COLLECTION).document(postId).update("isDeleted",true,"lastUpdate",FieldValue.serverTimestamp()).addOnCompleteListener((task)->{
             if(task.isSuccessful()){
                 listener.onComplete(true);
             }

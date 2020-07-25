@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.noamsway.MainActivity;
@@ -25,6 +26,7 @@ public class UserProfileFragment extends Fragment {
     private TextView name;
     private Button logout_button;
     private UserProfileViewModel mViewModel;
+    private ProgressBar progressBar;
 
     public static UserProfileFragment newInstance() {
         return new UserProfileFragment();
@@ -35,6 +37,7 @@ public class UserProfileFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root =  inflater.inflate(R.layout.user_profile_fragment, container, false);
         logout_button = root.findViewById(R.id.logoutButton);
+        progressBar = root.findViewById(R.id.progressBar);
         email = root.findViewById(R.id.user_email);
         name = root.findViewById(R.id.user_name);
         name.setText(ModelAuth.instance.getUserFullName());
@@ -42,6 +45,7 @@ public class UserProfileFragment extends Fragment {
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 ModelAuth.instance.longout();
                 Intent intToMain = new Intent(getActivity(), MainActivity.class);
                 startActivity(intToMain);

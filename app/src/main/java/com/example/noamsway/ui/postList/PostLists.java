@@ -50,8 +50,8 @@ public class PostLists extends Fragment implements RecyclerViewClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.post_list_fragment, container, false);
-        fab = root.findViewById(R.id.fab);
         swipeRefresh = root.findViewById(R.id.posts_list_swipe_refresh);
+        fab = root.findViewById(R.id.fab);
         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

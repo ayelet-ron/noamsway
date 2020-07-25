@@ -19,7 +19,6 @@
         android:focusable="true"
         android:isScrollContainer="true"
         android:scaleType="fitXY"
-        android:src="@drawable/flag"
         android:visibility="visible"
         app:layout_constrainedHeight="false"
         app:layout_constrainedWidth="true"
@@ -29,6 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/picture1" />
+        app:srcCompat="@drawable/ic_menu_camera" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

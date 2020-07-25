@@ -8,6 +8,7 @@ import com.example.noamsway.model.Model;
 import com.example.noamsway.model.Post;
 import com.example.noamsway.model.PostModel;
 import com.example.noamsway.ui.categories.CategoriesFragmentArgs;
+import com.example.noamsway.utils.Listener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +31,11 @@ public class PostListViewModel extends ViewModel {
         }
         return userPostsListData;
     }
-    public void refreshMyPost(){
-        //need to call refresh that only update the local DB reference eliave
+    public void refreshMyPost(String userEmail, Listener<Boolean> listener){
+        PostModel.instance.refreshMyPostsList(userEmail,listener);
     }
-    public void refreshCategoryPosts(){
-        //need to call refresh that only update the local DB reference eliave
+    public void refreshCategoryPosts(String categoryName, Listener<Boolean> listener){
+        PostModel.instance.refreshPostsCategoryList(categoryName,listener);
 
     }
 }

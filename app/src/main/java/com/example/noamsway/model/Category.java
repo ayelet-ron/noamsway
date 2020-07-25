@@ -1,37 +1,35 @@
 package com.example.noamsway.model;
 
-import android.graphics.drawable.Drawable;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Category implements Serializable {
-    public long img;
-    public long icon;
+    public String img;
+    public String icon;
     public String name;
     public Categories type;
 
-    public Category(String name, long img,long icon, Categories type){
+    public Category(String name, String img, String icon, Categories type){
         this.img = img;
         this.name = name;
         this.type = type;
         this.icon=icon;
     }
 
-    public long getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(long img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
-    public long getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(long icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
@@ -67,8 +65,8 @@ public class Category implements Serializable {
     }
     public static Category factory(Map<String, Object> json){
         Category category = new Category();
-        category.setImg((long)json.get("img"));
-        category.setIcon((long)json.get("icon"));
+        category.setImg((String)json.get("img"));
+        category.setIcon((String)json.get("icon"));
         category.setType(Categories.valueOf((String) json.get("type")));
         category.setName((String)json.get("name"));
         return category;
