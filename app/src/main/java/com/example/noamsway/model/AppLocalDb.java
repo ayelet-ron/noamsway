@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.noamsway.MyApplication;
 
-@Database(entities = {Post.class}, version = 18)
+@Database(entities = {Post.class}, version = 19)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract PostDao postDao();
 }

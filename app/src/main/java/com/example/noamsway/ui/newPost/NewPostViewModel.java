@@ -17,12 +17,4 @@ public class NewPostViewModel extends ViewModel {
     public void uploadImage(Uri imagePath, DataCallback callback){
         StoreModel.uploadImage(imagePath,callback);
     }
-//    public NewPostViewModel() {
-//    }
-//    public LiveData<ArrayList<String>> getData(){
-//        if(categoriesListData==null){
-//            categoriesListData = CategoryModel.getAllCategoriesName();
-//        }
-//        return categoriesListData;
-//    }
 }

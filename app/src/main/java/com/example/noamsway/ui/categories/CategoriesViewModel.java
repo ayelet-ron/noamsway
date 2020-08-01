@@ -14,10 +14,4 @@ public class CategoriesViewModel extends ViewModel {
 
     public CategoriesViewModel() {
     }
-//    public LiveData<ArrayList<Category>> getData(){
-//        if(categoriesListData==null){
-//            categoriesListData = CategoryModel.getAllCategories();
-//        }
-//        return categoriesListData;
-//    }
 }

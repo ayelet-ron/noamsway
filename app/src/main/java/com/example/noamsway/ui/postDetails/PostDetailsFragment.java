@@ -125,8 +125,6 @@ public class PostDetailsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_button:
-//                NavController nav = NavHostFragment.findNavController(PostDetailsFragment.this);
-//                nav.popBackStack();
                 PostModel.instance.deletePost(post.postId, new Listener<Boolean>() {
                     @Override
                     public void onComplete(Boolean data) {
@@ -262,10 +260,5 @@ public class PostDetailsFragment extends Fragment {
 
         }
     }
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        setHasOptionsMenu(false);
-//    }
 
 }

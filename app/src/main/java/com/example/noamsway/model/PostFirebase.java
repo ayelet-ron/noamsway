@@ -155,12 +155,4 @@ public class PostFirebase {
 
         });
     }
-//    public PostFirebase(){
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        FirebaseFirestoreSettings settings = new
-//                FirebaseFirestoreSettings.Builder()
-//                .setPersistenceEnabled(true)
-//                .build();
-//        db.setFirestoreSettings(settings);
-//    }
 }
