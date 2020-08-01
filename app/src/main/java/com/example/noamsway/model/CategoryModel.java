@@ -83,10 +83,4 @@ public class CategoryModel {
 //        return liveData;
 //    }
 
-    public static void initData() {
-//        addCategory(new Category("Patriotism", R.drawable.picture1, R.drawable.israel_map_icon, Categories.PATRIOTISM));
-//        addCategory(new Category("Trips", R.drawable.trips, R.drawable.trip_icon, Categories.TRIPS));
-//        addCategory(new Category("Army", R.drawable.capture, R.drawable.army_icon, Categories.ARMY));
-//        addCategory(new Category("News", R.drawable.news, R.drawable.news_icon, Categories.NEWS));
-    }
 }

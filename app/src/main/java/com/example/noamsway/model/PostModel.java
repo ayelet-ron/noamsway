@@ -66,17 +66,7 @@ public class PostModel {
         refreshMyPostsList(userEmail,null);
         return liveData;
     }
-//    public LiveData<List<Post>> getAllPostsOfSpecificUser_old(String userEmail){
-//        MutableLiveData<List<Post>> liveData = new MutableLiveData<>();
-//        liveData.setValue(new LinkedList<>());
-//        PostFirebase.getAllPostsOfSpecificUser(userEmail,new Listener<List<Post>>() {
-//            @Override
-//            public void onComplete(List<Post> data) {
-//                liveData.setValue(data);
-//            }
-//        });
-//        return liveData;
-//    }
+
     public void refreshPostsCategoryList(String category,final Listener<Boolean> listener){
         long lastUpdated = MyApplication.context.getSharedPreferences("TAG",MODE_PRIVATE).getLong("PostsLastUpdateDate",0);
         PostFirebase.getAllPostsSince(lastUpdated,new Listener<List<Post>>() {

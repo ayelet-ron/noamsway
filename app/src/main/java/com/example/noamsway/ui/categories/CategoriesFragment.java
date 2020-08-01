@@ -33,33 +33,14 @@ public class CategoriesFragment extends Fragment implements RecyclerViewClickLis
     private CategoriesViewModel categoriesViewModel;
 
     public CategoriesFragment() {
-        //CategoryModel.initData();
     }
     public void onAttach(Context context) {
         super.onAttach(context);
-//        liveDataCategories= categoriesViewModel.getData();
-//        liveDataCategories.observe(this, new Observer<ArrayList<Category>>() {
-//            @Override
-//            public void onChanged(ArrayList<Category> categories) {
-//                categoriesList = categories;
-//                adapter.setPosts(categories);
-//            }
-//        });
-
     }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         categoriesViewModel =
                 ViewModelProviders.of(this).get(CategoriesViewModel.class);
-//        User user = ModelAuth.instance.getCurrentUser();
-//        Category newsCategory = new Category("News", R.drawable.news,R.drawable.news_icon, Categories.NEWS);
-//        Post news1 = new Post(R.drawable.view,"beautiful day","just go out and look at the view",user,newsCategory);
-//        PostModel.instance.addPost(news1, new Listener<Boolean>() {
-//            @Override
-//            public void onComplete(Boolean data) {
-//                Log.d("TAG","add new post" + data);
-//            }
-//        });
         categoriesList = CategoryModel.getInstance().getCategories();
         View root = inflater.inflate(R.layout.fragment_categories, container, false);
         recyclerView = root.findViewById(R.id.categories_list);
@@ -82,9 +63,5 @@ public class CategoriesFragment extends Fragment implements RecyclerViewClickLis
         NavController nav = NavHostFragment.findNavController(this);
         CategoriesFragmentDirections.ActionNavCategoryToPostListFragment action = CategoriesFragmentDirections.actionNavCategoryToPostListFragment(categoriesList.get(position).name);
         nav.navigate(action);
-//        NavController nav = NavHostFragment.findNavController(this);
-//        nav.navigate(R.id.action_nav_category_to_postListFragment);
-//        NavDirections direction = CategoriesFragmentDirections.actionNavCategoryToPostListFragment();
-//        Navigation.findNavController(recyclerView).navigate(direction);
     }
 }
