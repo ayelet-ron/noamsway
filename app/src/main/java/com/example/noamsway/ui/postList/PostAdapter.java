@@ -15,7 +15,6 @@ import com.example.noamsway.model.Post;
 import com.example.noamsway.utils.RecyclerViewClickListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHolder> {
@@ -42,14 +41,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostRowViewHol
 
     @Override
     public int getItemCount() {
-        if(categoryPosts!=null){
+        if (categoryPosts != null) {
             return this.categoryPosts.size();
-        }
-        else{
+        } else {
             return 0;
         }
     }
-    public void setPosts(List<Post> dataList){
+
+    public void setPosts(List<Post> dataList) {
         categoryPosts = dataList;
         notifyDataSetChanged();
     }

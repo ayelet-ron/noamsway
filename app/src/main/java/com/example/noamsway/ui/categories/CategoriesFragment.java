@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -34,9 +33,11 @@ public class CategoriesFragment extends Fragment implements RecyclerViewClickLis
 
     public CategoriesFragment() {
     }
+
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         categoriesViewModel =
@@ -47,19 +48,21 @@ public class CategoriesFragment extends Fragment implements RecyclerViewClickLis
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        this.adapter = new CategoriesAdapter(categoriesList,this);
+        this.adapter = new CategoriesAdapter(categoriesList, this);
         recyclerView.setAdapter(this.adapter);
 
         return root;
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
     }
+
     @Override
     public void onItemClick(int position) {
-        Log.d("TAG","row was clicked" + position);
+        Log.d("TAG", "row was clicked" + position);
         NavController nav = NavHostFragment.findNavController(this);
         CategoriesFragmentDirections.ActionNavCategoryToPostListFragment action = CategoriesFragmentDirections.actionNavCategoryToPostListFragment(categoriesList.get(position).name);
         nav.navigate(action);

@@ -2,13 +2,6 @@ package com.example.noamsway.model;
 
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.noamsway.R;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Model {

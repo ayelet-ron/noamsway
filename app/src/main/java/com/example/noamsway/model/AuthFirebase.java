@@ -2,7 +2,6 @@ package com.example.noamsway.model;
 
 import android.util.Log;
 
-
 import androidx.annotation.NonNull;
 
 import com.example.noamsway.utils.Listener;
@@ -13,44 +12,44 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 public class AuthFirebase {
     FirebaseAuth mAuth;
-    public AuthFirebase(){
+
+    public AuthFirebase() {
         mAuth = FirebaseAuth.getInstance();
     }
-    static boolean areUserLoggedIn(){
+
+    static boolean areUserLoggedIn() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser==null){
+        if (currentUser == null) {
             return false;
         }
         return true;
     }
 
-    public void login(User user,final Listener<Boolean> listener){
-        mAuth.signInWithEmailAndPassword(user.email,user.password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    public void login(User user, final Listener<Boolean> listener) {
+        mAuth.signInWithEmailAndPassword(user.email, user.password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     listener.onComplete(true);
                     Log.d("TAG", "createUserWithEmail:success");
-                }else {
+                } else {
                     // If sign in fails, display a message to the user.
                     listener.onComplete(false);
                     Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                    //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-    static void signUp(User user,final Listener<Boolean> listener){
+
+    static void signUp(User user, final Listener<Boolean> listener) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(user.email,user.password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(user.email, user.password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -60,28 +59,31 @@ public class AuthFirebase {
                     FirebaseUser Firebaseuser = mAuth.getCurrentUser();
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(user.fullName).build();
                     Firebaseuser.updateProfile(profileUpdates);
-                }else {
+                } else {
                     listener.onComplete(false);
                     // If sign in fails, display a message to the user.
                     Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                    //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-    static void longout(){
+
+    static void longout() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
     }
-    static String getUserEmail(){
+
+    static String getUserEmail() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         return Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
     }
-    static String getUserFullName(){
+
+    static String getUserFullName() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         return Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName();
     }
-    static User getCurrentUser(){
+
+    static User getCurrentUser() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = Objects.requireNonNull(mAuth.getCurrentUser());
         User user = new User();

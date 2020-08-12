@@ -1,23 +1,21 @@
 package com.example.noamsway.ui.contactUs;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.noamsway.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 public class ContactUsFragment extends Fragment {
-
+    private ScrollView scroll;
     private ContactUsViewModel mViewModel;
 
     public static ContactUsFragment newInstance() {
@@ -27,16 +25,20 @@ public class ContactUsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root =  inflater.inflate(R.layout.contact_us_fragment, container, false);
+        View root = inflater.inflate(R.layout.contact_us_fragment, container, false);
         FloatingActionButton fab = root.findViewById(R.id.fab);
+        this.scroll = root.findViewById(R.id.scroll);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                scrollDown();
             }
         });
         return root;
+    }
+
+    public void scrollDown() {
+        this.scroll.fullScroll(View.FOCUS_DOWN);
     }
 
     @Override

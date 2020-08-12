@@ -173,7 +173,8 @@ public class Post implements Serializable {
         return category;
     }
 }
-class UserConverter{
+
+class UserConverter {
 
     @TypeConverter
     public static String userToJson(User user) {
@@ -186,11 +187,12 @@ class UserConverter{
     public static User userFromJson(String string) {
         GsonBuilder gson = new GsonBuilder();
         Gson gsonObj = gson.create();
-        Map<String,Object> json = gsonObj.fromJson(string,Map.class);
+        Map<String, Object> json = gsonObj.fromJson(string, Map.class);
         return User.factory(json);
     }
 }
-class CategoryConverter{
+
+class CategoryConverter {
 
     @TypeConverter
     public static String categoryToJson(Category category) {
@@ -198,11 +200,12 @@ class CategoryConverter{
         Gson gsonObj = gson.create();
         return gsonObj.toJson(category.toMap());
     }
+
     @TypeConverter
     public static Category categoryToJson(String string) {
         GsonBuilder gson = new GsonBuilder();
         Gson gsonObj = gson.create();
-        Map<String,Object> json = gsonObj.fromJson(string,Map.class);
+        Map<String, Object> json = gsonObj.fromJson(string, Map.class);
         return Category.factory(json);
     }
 }

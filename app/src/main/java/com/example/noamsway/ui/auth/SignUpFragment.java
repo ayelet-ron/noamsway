@@ -1,16 +1,7 @@
 package com.example.noamsway.ui.auth;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +11,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
-import com.example.noamsway.model.Model;
 import com.example.noamsway.model.ModelAuth;
 import com.example.noamsway.model.User;
-import com.example.noamsway.ui.home.HomeFragment;
 import com.example.noamsway.utils.Listener;
 
 public class SignUpFragment extends Fragment {
@@ -64,37 +60,33 @@ public class SignUpFragment extends Fragment {
                 String passwordText = password.getText().toString();
                 String fullNameText = fullName.getText().toString();
                 String rePasswordText = confirmPassword.getText().toString();
-                if(emailText.isEmpty() && passwordText.isEmpty() && fullNameText.isEmpty()){
-                    Toast.makeText(getActivity(),"Please provide email, password and full name!",Toast.LENGTH_SHORT).show();
-                }
-                else if(fullNameText.isEmpty()){
+                if (emailText.isEmpty() && passwordText.isEmpty() && fullNameText.isEmpty()) {
+                    Toast.makeText(getActivity(), "Please provide email, password and full name!", Toast.LENGTH_SHORT).show();
+                } else if (fullNameText.isEmpty()) {
                     fullName.setError("Please enter your Name");
                     fullName.requestFocus();
-                }
-                else if(emailText.isEmpty()){
+                } else if (emailText.isEmpty()) {
                     email.setError("Please enter your email");
                     email.requestFocus();
-                }
-                else if(passwordText.isEmpty()){
+                } else if (passwordText.isEmpty()) {
                     password.setError("Please enter your password");
                     password.requestFocus();
-                }
-                else if(!rePasswordText.equals(passwordText)){
+                } else if (!rePasswordText.equals(passwordText)) {
                     confirmPassword.setError("Passwords do not match");
                     confirmPassword.requestFocus();
                 }
-                if(!emailText.isEmpty() && !passwordText.isEmpty() && !fullNameText.isEmpty()){
+                if (!emailText.isEmpty() && !passwordText.isEmpty() && !fullNameText.isEmpty() && rePasswordText.equals(passwordText)) {
                     progressBar.setVisibility(View.VISIBLE);
-                    User user = new User(emailText,fullNameText,passwordText);
+                    User user = new User(emailText, fullNameText, passwordText);
                     ModelAuth.instance.signUp(user, new Listener<Boolean>() {
                         @Override
                         public void onComplete(Boolean data) {
-                            if(data){
+                            if (data) {
                                 Intent intToMain = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intToMain);
-                            }
-                            else{
-                                //Toast.makeText(getActivity(),"Login failed due to incorrect password or email",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(),"SignUp Failed Please Try Again",Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
                     });

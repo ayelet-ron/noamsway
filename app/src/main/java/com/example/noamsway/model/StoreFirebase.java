@@ -14,18 +14,17 @@ public class StoreFirebase {
     private FirebaseStorage fbStorage;
     private UploadTask uploadTask;
 
-    public StoreFirebase(){
+    public StoreFirebase() {
         fbStorage = FirebaseStorage.getInstance();
         storageRef = fbStorage.getReferenceFromUrl(REFERENCE_URL);
     }
 
 
-    public void uploadImage(Uri imagePath , DataCallback callback)
-    {
+    public void uploadImage(Uri imagePath, DataCallback callback) {
         fbStorage = FirebaseStorage.getInstance();
         storageRef = fbStorage.getReferenceFromUrl(REFERENCE_URL);
         storageRef = fbStorage.getReference();
-        StorageReference postImgRef = storageRef.child("images/"+imagePath.getLastPathSegment());
+        StorageReference postImgRef = storageRef.child("images/" + imagePath.getLastPathSegment());
         uploadTask = postImgRef.putFile(imagePath);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

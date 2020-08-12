@@ -2,7 +2,6 @@ package com.example.noamsway.ui.postDetails;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,7 +31,6 @@ import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
 import com.example.noamsway.model.Category;
 import com.example.noamsway.model.CategoryModel;
-import com.example.noamsway.model.Model;
 import com.example.noamsway.model.ModelAuth;
 import com.example.noamsway.model.Post;
 import com.example.noamsway.model.PostModel;
@@ -46,7 +43,7 @@ import java.util.ArrayList;
 public class PostDetailsFragment extends Fragment {
     private Post post;
     private Category editCategory;
-    private TextView authorName,authorNameTitle;
+    private TextView authorName, authorNameTitle;
     private ImageView postImage, categoryIcon;
     private Spinner dropdown;
     private final int PICK_IMAGE_REQUEST = 71;
@@ -54,7 +51,7 @@ public class PostDetailsFragment extends Fragment {
     private PostDetailsViewModel mViewModel;
     private Uri filePath;
     boolean isPickedImage = false;
-    private Boolean editSelected,fromMyPosts;
+    private Boolean editSelected, fromMyPosts;
     private String menuCategory;
     private ArrayList<String> categoriesNames = new ArrayList<>();
     private View root;
@@ -69,7 +66,7 @@ public class PostDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.post_details_fragment, container, false);
-        editSelected=false;
+        editSelected = false;
         post = PostDetailsFragmentArgs.fromBundle(getArguments()).getPost();
         menuCategory = post.category.name;
         editCategory = post.category;
@@ -138,11 +135,15 @@ public class PostDetailsFragment extends Fragment {
                 });
                 return true;
             case R.id.edit_button:
-                if(editSelected){
+                if (editSelected) {
+                    if(postDescription.getText().toString().isEmpty() || postName.getText().toString().isEmpty()){
+                        Toast.makeText(getActivity(), "Please Fill All Post Fields", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                     post.setCategory(editCategory);
                     post.setDescription(postDescription.getText().toString());
                     post.setTitle(postName.getText().toString());
-                    if(isPickedImage){
+                    if (isPickedImage) {
                         mViewModel.uploadImage(filePath, new DataCallback() {
                             @Override
                             public void onData(String string) {
@@ -150,12 +151,11 @@ public class PostDetailsFragment extends Fragment {
                                 PostModel.instance.updatePost(post, new Listener<Boolean>() {
                                     @Override
                                     public void onComplete(Boolean data) {
-                                        if(data){
+                                        if (data) {
                                             Toast.makeText(getActivity(), "Your Post Was Update Successfully", Toast.LENGTH_SHORT).show();
                                             moveBack();
                                             isPickedImage = false;
-                                        }
-                                        else{
+                                        } else {
                                             Toast.makeText(getActivity(), "Something went wrong please try again", Toast.LENGTH_SHORT).show();
                                             moveBack();
                                         }
@@ -163,26 +163,23 @@ public class PostDetailsFragment extends Fragment {
                                 });
                             }
                         });
-                    }
-                    else {
+                    } else {
                         PostModel.instance.updatePost(post, new Listener<Boolean>() {
                             @Override
                             public void onComplete(Boolean data) {
-                                if(data){
+                                if (data) {
                                     Toast.makeText(getActivity(), "Your Post Was Update Successfully", Toast.LENGTH_SHORT).show();
                                     moveBack();
                                     isPickedImage = false;
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(getActivity(), "Something went wrong please try again", Toast.LENGTH_SHORT).show();
                                     moveBack();
                                 }
                             }
                         });
                     }
-                }
-                else{
-                    editSelected=true;
+                } else {
+                    editSelected = true;
                     Toast.makeText(getActivity(), "Edit Post", Toast.LENGTH_SHORT).show();
                     item.setIcon(R.drawable.save_icon);
                     postImage.setOnClickListener(new View.OnClickListener() {
@@ -219,6 +216,7 @@ public class PostDetailsFragment extends Fragment {
         postName.setCursorVisible(false);
         postDescription.setCursorVisible(false);
     }
+
     private void enableEdit() {
         postName.setFocusableInTouchMode(true);
         postDescription.setFocusableInTouchMode(true);
@@ -226,18 +224,18 @@ public class PostDetailsFragment extends Fragment {
         postDescription.setCursorVisible(true);
     }
 
-    private void moveBack(){
+    private void moveBack() {
         NavController nav = NavHostFragment.findNavController(PostDetailsFragment.this);
-        if(fromMyPosts){
-            PostDetailsFragmentDirections.ActionPostDetailsFragmentToNavMyPosts action =PostDetailsFragmentDirections.actionPostDetailsFragmentToNavMyPosts();
+        if (fromMyPosts) {
+            PostDetailsFragmentDirections.ActionPostDetailsFragmentToNavMyPosts action = PostDetailsFragmentDirections.actionPostDetailsFragmentToNavMyPosts();
             nav.navigate(action);
-        }
-        else{
+        } else {
             PostDetailsFragmentDirections.ActionPostDetailsFragmentToPostListFragment action = PostDetailsFragmentDirections.actionPostDetailsFragmentToPostListFragment(menuCategory);
             nav.navigate(action);
         }
 
     }
+
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -251,9 +249,8 @@ public class PostDetailsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         // TODO: Fix when not picking picture
-        if(requestCode == PICK_IMAGE_REQUEST
-                && data != null && data.getData() != null )
-        {
+        if (requestCode == PICK_IMAGE_REQUEST
+                && data != null && data.getData() != null) {
             filePath = data.getData();
             Picasso.get().load(filePath).into(postImage);
             isPickedImage = true;

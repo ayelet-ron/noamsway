@@ -1,14 +1,7 @@
 package com.example.noamsway.ui.userProfile;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +9,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.noamsway.MainActivity;
 import com.example.noamsway.R;
-import com.example.noamsway.model.Model;
 import com.example.noamsway.model.ModelAuth;
 
 public class UserProfileFragment extends Fragment {
@@ -35,7 +32,7 @@ public class UserProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root =  inflater.inflate(R.layout.user_profile_fragment, container, false);
+        View root = inflater.inflate(R.layout.user_profile_fragment, container, false);
         logout_button = root.findViewById(R.id.logoutButton);
         progressBar = root.findViewById(R.id.progressBar);
         email = root.findViewById(R.id.user_email);

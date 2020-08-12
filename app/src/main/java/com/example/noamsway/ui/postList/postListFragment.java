@@ -39,7 +39,6 @@ public class postListFragment extends PostLists {
         categoryName = CategoriesFragmentArgs.fromBundle(getArguments()).getCategoryName();
 
 
-
     }
 
     @Override
@@ -61,7 +60,7 @@ public class postListFragment extends PostLists {
             postListViewModel.refreshCategoryPosts(categoryName, new Listener<Boolean>() {
                 @Override
                 public void onComplete(Boolean data) {
-                    if(data){
+                    if (data) {
                         swipeRefresh.setRefreshing(false);
                     }
                 }

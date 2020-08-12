@@ -47,40 +47,5 @@ public class CategoryModel {
         CategoryFirebase.addCategory(category);
     }
 
-//    public static LiveData<ArrayList<Category>> getAllCategories() {
-//        MutableLiveData<ArrayList<Category>> liveData = new MutableLiveData<>();
-//        liveData.setValue(new ArrayList<>());
-//        CategoryFirebase.getAllCategories(new Listener<ArrayList<Category>>() {
-//            @Override
-//            public void onComplete(ArrayList<Category> data) {
-//                liveData.setValue(data);
-//            }
-//        });
-//        return liveData;
-//    }
-//
-//    public static LiveData<ArrayList<String>> getAllCategoriesName() {
-//        MutableLiveData<ArrayList<String>> liveData = new MutableLiveData<>();
-//        liveData.setValue(new ArrayList<>());
-//        CategoryFirebase.getAllCategoriesName(new Listener<ArrayList<String>>() {
-//            @Override
-//            public void onComplete(ArrayList<String> data) {
-//                liveData.setValue(data);
-//            }
-//        });
-//        return liveData;
-//    }
-//
-//    public static LiveData<ArrayList<Category>> getCategoryByName(String categoryName) {
-//        MutableLiveData<ArrayList<Category>> liveData = new MutableLiveData<>();
-//        liveData.setValue(new ArrayList<>());
-//        CategoryFirebase.getCategoryByName(categoryName, new Listener<ArrayList<Category>>() {
-//            @Override
-//            public void onComplete(ArrayList<Category> data) {
-//                liveData.setValue(data);
-//            }
-//        });
-//        return liveData;
-//    }
 
 }

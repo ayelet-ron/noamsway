@@ -10,11 +10,11 @@ public class Category implements Serializable {
     public String name;
     public Categories type;
 
-    public Category(String name, String img, String icon, Categories type){
+    public Category(String name, String img, String icon, Categories type) {
         this.img = img;
         this.name = name;
         this.type = type;
-        this.icon=icon;
+        this.icon = icon;
     }
 
     public String getImg() {
@@ -49,12 +49,14 @@ public class Category implements Serializable {
         this.type = type;
     }
 
-    public Category(String name, Categories type){
+    public Category(String name, Categories type) {
         this.name = name;
         this.type = type;
     }
-    public Category(){
+
+    public Category() {
     }
+
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("img", img);
@@ -63,12 +65,13 @@ public class Category implements Serializable {
         result.put("name", name);
         return result;
     }
-    public static Category factory(Map<String, Object> json){
+
+    public static Category factory(Map<String, Object> json) {
         Category category = new Category();
-        category.setImg((String)json.get("img"));
-        category.setIcon((String)json.get("icon"));
+        category.setImg((String) json.get("img"));
+        category.setIcon((String) json.get("icon"));
         category.setType(Categories.valueOf((String) json.get("type")));
-        category.setName((String)json.get("name"));
+        category.setName((String) json.get("name"));
         return category;
     }
 }

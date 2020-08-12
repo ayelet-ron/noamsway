@@ -72,6 +72,7 @@ public class SignInFragment extends Fragment {
                             }
                             else{
                                 Toast.makeText(getActivity(),"Login failed due to incorrect password or email",Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
 

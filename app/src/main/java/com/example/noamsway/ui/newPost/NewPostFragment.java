@@ -2,7 +2,6 @@ package com.example.noamsway.ui.newPost;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -37,15 +36,16 @@ import com.example.noamsway.model.User;
 import com.example.noamsway.utils.DataCallback;
 import com.example.noamsway.utils.Listener;
 import com.squareup.picasso.Picasso;
-//import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+//import com.squareup.picasso.Picasso;
+
 public class NewPostFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private Category category;
     private String categoryName;
-    private EditText description,postName;
+    private EditText description, postName;
     private String image;
     private Uri filePath;
     private ImageView uploadImage;
@@ -63,15 +63,6 @@ public class NewPostFragment extends Fragment implements AdapterView.OnItemSelec
     public void onAttach(Context context) {
         super.onAttach(context);
         mViewModel = ViewModelProviders.of(this).get(NewPostViewModel.class);
-//        categoriesLiveData= mViewModel.getData();
-//        categoriesLiveData.observe(this, new Observer<ArrayList<String>>() {
-//            @Override
-//            public void onChanged(ArrayList<String> categories) {
-//                categoriesNames = categories;
-//
-//            }
-//        });
-
     }
 
     @Override
@@ -81,6 +72,7 @@ public class NewPostFragment extends Fragment implements AdapterView.OnItemSelec
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("Add New Post");
         return root;
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         categoriesNames = CategoryModel.getInstance().getCategoriesNames();
@@ -112,10 +104,6 @@ public class NewPostFragment extends Fragment implements AdapterView.OnItemSelec
                     User user = ModelAuth.instance.getCurrentUser();
                     Category category = CategoryModel.instance.getCategoryByName(categoryName);
                     Post post = new Post(postName.getText().toString(), description.getText().toString(), user, category);
-                    Uri path = Uri.parse("android.resource://com.colman.noamsway/" + R.drawable.place_holder);
-                    if(filePath == null) {
-                        filePath = path;
-                    }
                     Date d = new Date();
                     mViewModel.uploadImage(filePath, new DataCallback() {
                         @Override
@@ -145,6 +133,7 @@ public class NewPostFragment extends Fragment implements AdapterView.OnItemSelec
         });
 
     }
+
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -163,19 +152,19 @@ public class NewPostFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     public boolean checkForm() {
-        if (TextUtils.isEmpty(description.getText()) || TextUtils.isEmpty(postName.getText())) {
+        if (TextUtils.isEmpty(description.getText()) || TextUtils.isEmpty(postName.getText()) || filePath == null) {
             return false;
         }
         return true;
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // TODO: Fix when not picking picture
-        if(requestCode == PICK_IMAGE_REQUEST
-                && data != null && data.getData() != null )
-        {
+        if (requestCode == PICK_IMAGE_REQUEST
+                && data != null && data.getData() != null) {
             filePath = data.getData();
             Picasso.get().load(filePath).into(uploadImage);
         }
